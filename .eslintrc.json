@@ -6,8 +6,6 @@
   },
   "extends": [
     "standard-with-typescript",
-    "plugin:react/recommended",
-    "plugin:astro/recommended",
     "eslint-config-prettier",
     "plugin:tailwindcss/recommended"
   ],
@@ -23,8 +21,10 @@
   },
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx", "*.js"],
-      "parser": "@typescript-eslint/parser"
+      "files": ["*.tsx"],
+      "parser": "@typescript-eslint/parser",
+      "plugins": ["react", "eslint-plugin-prettier"],
+      "extends": ["plugin:react/recommended"]
     },
     {
       "files": ["*.astro"],
@@ -33,13 +33,10 @@
         "parser": "@typescript-eslint/parser",
         "extraFileExtensions": [".astro"]
       },
-      "rules": {
-        // override/add rules settings here, such as:
-        // "astro/no-set-html-directive": "error"
-      }
+      "extends": ["plugin:astro/recommended"]
     }
   ],
-  "plugins": ["react", "eslint-plugin-prettier"],
+
   "rules": {
     "@typescript-eslint/strict-boolean-expressions": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
@@ -51,6 +48,7 @@
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/naming-convention": "off",
     "@typescript-eslint/no-floating-promises": "off",
+    "tailwindcss/no-custom-classname": "off",
 
     "prettier/prettier": [
       "error",

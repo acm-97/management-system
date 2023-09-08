@@ -1,0 +1,10 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import {SalesTable} from '@/modules/sales/components'
+---
+
+<Layout title="Control de Ventas">
+  <main class="flex flex-col justify-center gap-24">
+    <SalesTable client:idle />
+  </main>
+</Layout>

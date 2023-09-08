@@ -1,14 +1,13 @@
-import {set} from './storage'
-
-export const cookieDomain = import.meta.env.COOKIE_DOMAIN
-export const tokenCookieName = cookieDomain ? 'token' : 'staging_token'
+import {retrieve, set} from './storage'
+import axios, {type AxiosInstance} from 'axios'
 
 // local storage key for user
 export const TOKEN_KEY = 'userToken'
+// export const API_URL = import.meta.env.API_URL ?? process.env.API_URL
 
 function tokenFromLocalStorage() {
-  if (window?.localStorage) {
-    const value = window.localStorage.getItem(TOKEN_KEY)
+  if (window.localStorage) {
+    const value = retrieve(TOKEN_KEY)
     if (value) {
       try {
         const token = JSON.parse(value)
@@ -33,49 +32,78 @@ function getToken() {
   }
 }
 
-function onFetchDone(response: any) {
-  // handle no content response (204)
-  if (response.status === 204) {
-    return Promise.resolve()
-  }
-  if (response.status >= 200 && response.status < 300) {
-    return response.json()
-  } else {
-    const error = new Error(response.statusText)
-    // @ts-expect-error Property 'response' does not exist on type 'Error'
-    error.response = response
-    throw error
-  }
-}
-
-async function client(endpoint: string, {arg}: {arg: any}) {
-  const token = getToken()
-  const headers = {
+const api: AxiosInstance = axios.create({
+  baseURL: import.meta.env.PUBLIC_API_URL,
+  headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    Authorization: '',
+    // 'Access-Control-Allow-Origin': '*',
+    Authorization: `bearer ${import.meta.env.PUBLIC_API_TOKEN}`,
+  },
+})
+interface ClientProps {
+  get: (url: string, config: any) => any
+  getOne: (url: string, config: any) => any
+  post: (url: string, {arg}: {arg: any}) => any
+  put: (url: string, {arg}: {arg: any}) => any
+  delete: (url: string, {arg}: {arg: any}) => any
+}
+class Client implements ClientProps {
+  async get(url: string) {
+    // api.interceptors.request.use(function (config) {
+    //   const token: string = getToken()
+    //   config.headers.Authorization = token ? `Bearer ${token}` : ''
+    //   return config
+    // })
+
+    return await api
+      .get(url)
+      .then((res: any) => res)
+      .catch(error => {
+        return error
+      })
   }
 
-  if (token) {
-    headers.Authorization = `Bearer ${token}`
-  }
-  const config = arg ?? {}
-  const {body, ...restConfig} = config
-  const bodyConfig = body ? {body: JSON.stringify(body)} : {}
-  const fetchConfig = {
-    method: body ? 'POST' : 'GET',
-    ...restConfig,
-    ...bodyConfig,
-    headers: {
-      ...headers,
-      ...restConfig.headers,
-    },
+  async getOne(url: string) {
+    return await api
+      .get(url)
+      .then((res: any) => res)
+      .catch(error => {
+        return error
+      })
   }
 
-  return await fetch(`${import.meta.env.API_URL}/${endpoint}`, fetchConfig).then(onFetchDone)
+  async post(url: string, {arg}: {arg: any}) {
+    const {payload, ...configRest} = arg
+    return await api
+      .post(url, {data: payload}, {...configRest})
+      .then((res: any) => res)
+      .catch(error => {
+        return error
+      })
+  }
+
+  async put(url: string, {arg}: {arg: any}) {
+    const {payload, id, ...configRest} = arg
+    return await api
+      .put(`${url}/${id as string}`, {data: payload}, {...configRest})
+      .then((res: any) => res)
+      .catch(error => {
+        return error
+      })
+  }
+
+  async delete(url: string, {arg}: {arg: any}) {
+    const {data, id, ...configRest} = arg
+    return await api
+      .delete(`${url}/${id as string}`, {...configRest})
+      .then((res: any) => res)
+      .catch(error => {
+        return error
+      })
+  }
 }
 
 export {getToken, tokenToLocalStorage}
 
-export default client
+export default new Client()
