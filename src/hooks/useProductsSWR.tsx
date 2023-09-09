@@ -10,6 +10,12 @@ export default function useProductsSWR(space: string = SPACES.SALES) {
   const {refreshSales} = useSalesSWR()
 
   const {
+    data: subHeaders,
+    isLoading: isFetchingSubHeaders,
+    error: subHeadersError,
+  } = useSWR('/product-sub-headers', client.get)
+
+  const {
     data: products,
     isLoading: isFetchingProducts,
     error,
@@ -23,7 +29,10 @@ export default function useProductsSWR(space: string = SPACES.SALES) {
     if (error) {
       toast.error(error, errorProps)
     }
-  }, [error])
+    if (subHeadersError) {
+      toast.error(subHeadersError, errorProps)
+    }
+  }, [error, subHeadersError])
 
   const {trigger: createProduct, isMutating: isCreatingProduct} = useSWRMutation(
     `/products`,
@@ -62,8 +71,10 @@ export default function useProductsSWR(space: string = SPACES.SALES) {
   )
 
   return {
-    products: products?.data,
+    products,
     isFetchingProducts,
+    subHeaders,
+    isFetchingSubHeaders,
     createProduct,
     isCreatingProduct,
     updateProduct,

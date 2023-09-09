@@ -58,7 +58,7 @@ class Client implements ClientProps {
 
     return await api
       .get(url)
-      .then((res: any) => res)
+      .then((res: any) => res.data)
       .catch(error => {
         return error
       })
@@ -67,7 +67,7 @@ class Client implements ClientProps {
   async getOne(url: string) {
     return await api
       .get(url)
-      .then((res: any) => res)
+      .then((res: any) => res.data)
       .catch(error => {
         return error
       })

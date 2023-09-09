@@ -23,10 +23,10 @@ const FormSchema = z.object({
 
 export type ProductsFormProps = z.infer<typeof FormSchema>
 
-const initialSubHeader = {
-  name: '',
-  color: '#0f766e',
-}
+// const initialSubHeader = {
+//   name: '',
+//   color: '#0f766e',
+// }
 
 export default function useProductsForm() {
   const {createProduct, updateProduct} = useProductsSWR()
@@ -65,7 +65,7 @@ export default function useProductsForm() {
         },
       })
     }),
-    initialSubHeader,
+    // initialSubHeader,
     reset,
     ...rest,
   }

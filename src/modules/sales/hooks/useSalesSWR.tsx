@@ -7,5 +7,5 @@ export default function useSalesSWR() {
     isLoading: isFetchingSales,
     mutate: refreshSales,
   } = useSWR('/sales?populate[info][populate]=*', client.get)
-  return {sales: sales?.data, isFetchingSales, refreshSales}
+  return {sales, isFetchingSales, refreshSales}
 }

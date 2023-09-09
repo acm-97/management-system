@@ -6,6 +6,22 @@ type SaleInvTableProps = {
   rows: any
 }
 
+const Row = ({type, sale}: {type: string; sale: any}) => {
+  switch (type) {
+    case 'number':
+      return sale?.salePrice
+    case 'currency':
+      return (
+        <>
+          <span className="text-yellow-300">{sale?.salePrice && '$'} </span>
+          {sale?.salePrice}
+        </>
+      )
+
+    default:
+  }
+}
+
 function SaleInvTable({columns, rows}: SaleInvTableProps) {
   return (
     <div
@@ -50,20 +66,23 @@ function SaleInvTable({columns, rows}: SaleInvTableProps) {
         <tbody>
           {rows?.map((row: any) => (
             <tr key={row?.uuid}>
-              {columns?.map((col: any) => {
-                const sale = row?.info?.find((item: any) => item?.product?.id === col?.id)
-                return (
-                  <Fragment key={crypto.randomUUID()}>
-                    <td className="border border-solid border-slate-700 p-1 text-center">
-                      {sale?.amount}
-                    </td>
-                    <td className="border border-solid border-slate-700 p-1 text-center">
-                      <span className="text-yellow-300">{sale?.salePrice && '$'}</span>{' '}
-                      {sale?.salePrice}
-                    </td>
-                  </Fragment>
-                )
-              })}
+              {columns?.map(
+                (col: any) =>
+                  col?.subHeaders?.map((subCol: any) => {
+                    const sale = row?.info?.find(
+                      (item: any) =>
+                        item?.product?.id === col?.id && item?.subHeaderId === subCol?.id,
+                    )
+                    return (
+                      <td
+                        key={subCol?.uuid}
+                        className="border border-solid border-slate-700 p-1 text-center"
+                      >
+                        <Row type={subCol?.type} sale={sale} />
+                      </td>
+                    )
+                  }),
+              )}
             </tr>
           ))}
         </tbody>
