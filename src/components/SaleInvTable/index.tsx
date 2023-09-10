@@ -22,7 +22,7 @@ function SaleInvTable({rows, columns, rowsProps, isLoading}: SaleInvTableProps) 
   const selectAllRows = useRowsStore(state => state.selectAllRows)
   const removeAllSelectedRows = useRowsStore(state => state.removeAllSelectedRows)
 
-  const allSeleted = rows?.every(row => selectedRows.includes(row?.rowId))
+  const allSelected = rows?.every(row => selectedRows.includes(row?.rowId))
 
   const onCheckedChange = (checked: CheckedState, id: string) => {
     if (checked) {
@@ -52,7 +52,7 @@ function SaleInvTable({rows, columns, rowsProps, isLoading}: SaleInvTableProps) 
         ) : columns?.length === 0 ? (
           <div className="flex h-72 flex-col items-center justify-center gap-2">
             <IconTableOff size={80} className="text-slate-500" />
-            <p className="text-slate-500 uppercase">Cree sus primeros datos</p>
+            <p className="uppercase text-slate-500">Cree sus primeros datos</p>
           </div>
         ) : (
           <table cellPadding="0" cellSpacing="0" className={'table w-full'}>
@@ -62,9 +62,9 @@ function SaleInvTable({rows, columns, rowsProps, isLoading}: SaleInvTableProps) 
                   <th className="border border-solid border-slate-700">
                     <Checkbox
                       className={cn('', {
-                        'border-orange-400 text-orange-400': allSeleted,
+                        'border-orange-400 text-orange-400': allSelected,
                       })}
-                      checked={allSeleted}
+                      checked={allSelected}
                       onCheckedChange={onCheckedAllChange}
                     />
                   </th>

@@ -47,25 +47,25 @@ function SalesTable() {
           <DropdownMenu>
             <DropdownMenuTrigger>
               <span className={cn(buttonVariants(), 'flex gap-2')}>
-                <IconTableOptions className="h-6 w-6 rounded-full border p-1 hover:cursor-pointer hover:ring-2" />{' '}
+                <IconTableOptions className="h-6 w-6 rounded-full border p-1 hover:cursor-pointer hover:ring-2" />
                 Acciones
               </span>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="border-transparent bg-primary-dark shadow-sm shadow-white">
               <DropdownMenuItem onClick={openDialog}>
-                Añadir Producto
+                Añadir Columnas
                 <DropdownMenuShortcut>
                   <IconColumns className="h-4 w-4" />
                 </DropdownMenuShortcut>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={async () => await createSale({payload: {info: []}})}>
-                Añadir Ventas
+                Añadir Filas
                 <DropdownMenuShortcut>
                   <IconMenu2 className="h-4 w-4" />
                 </DropdownMenuShortcut>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={onDeleteSales} disabled={selectedRows.length === 0}>
-                Eliminar Ventas
+                Eliminar Filas
                 <DropdownMenuShortcut>
                   <IconTrashXFilled className="h-4 w-4" />
                 </DropdownMenuShortcut>

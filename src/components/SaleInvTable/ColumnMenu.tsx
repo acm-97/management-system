@@ -25,11 +25,9 @@ function ColumnMenu({column}: DropdownProps) {
   }
   const onDelete = () => {
     sales?.data?.forEach((sale: any) => {
-      console.log('🚀 ~ file: ColumnMenu.tsx:28 ~ sales?.data?.forEach ~ sale:', sale)
       const info = sale?.info?.filter(
         (item: any) => !column?.subHeaders?.some((subCol: any) => !!item[subCol?.fieldId]),
       )
-      console.log('🚀 ~ file: ColumnMenu.tsx:30 ~ sales?.data?.forEach ~ info:', info)
       if (info.length !== sale?.info?.length) {
         updateSale({id: sale?.id, payload: {info}})
       }
