@@ -1,5 +1,5 @@
 import {Button, Dialog, FormFieldControl, TextField} from '@/components'
-import {useProductStore, useProductsForm, useColumnsSWR} from '@/hooks'
+import {useColumnsStore, useProductsForm, useColumnsSWR} from '@/hooks'
 import {
   IconSquareRoundedPlusFilled,
   IconSquareRoundedMinusFilled,
@@ -25,9 +25,9 @@ const Icon = ({type}: {type: string}) => {
 
 function AddColumnDialog() {
   const {subHeaders} = useColumnsSWR()
-  const isOpen = useProductStore(state => state.isOpen)
-  const closeDialog = useProductStore(state => state.closeDialog)
-  const setOpen = useProductStore(state => state.setOpen)
+  const isOpen = useColumnsStore(state => state.isOpen)
+  const closeDialog = useColumnsStore(state => state.closeDialog)
+  const setOpen = useColumnsStore(state => state.setOpen)
 
   const {control, handleSubmit, reset} = useProductsForm()
 

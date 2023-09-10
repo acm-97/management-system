@@ -25,7 +25,7 @@ export default function useSalesSWR() {
     '/sales',
     client.delete,
     {
-      // onSuccess: async () => await refreshSales(),
+      onSuccess: async () => await refreshSales(),
       onError: error => toast.error(error, errorProps),
     },
   )

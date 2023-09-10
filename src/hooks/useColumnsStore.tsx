@@ -9,7 +9,7 @@ type Store = {
   closeDialog: () => void
 }
 
-export const useProductStore = create<Store>()(set => ({
+export const useColumnsStore = create<Store>()(set => ({
   isOpen: false,
   product: null,
   setOpen: (isOpen: boolean) => set(() => ({isOpen})),

@@ -1,5 +1,5 @@
 import React, {memo, useEffect} from 'react'
-import {useProductStore, useColumnsSWR, useRowForm, useRowsStore} from '@/hooks'
+import {useColumnsStore, useColumnsSWR, useRowForm, useRowsStore} from '@/hooks'
 import {
   AddColumnDialog,
   Button,
@@ -20,7 +20,7 @@ function SalesTable() {
   const {sales, updateSale, createSale, deleteSale, refreshSales, isFetchingSales} = useSalesSWR()
   const {control, handleSubmit, formState} = useRowForm(sales?.data)
   const {products, isFetchingProducts} = useColumnsSWR()
-  const openDialog = useProductStore(state => state.openDialog)
+  const openDialog = useColumnsStore(state => state.openDialog)
   const selectedRows = useRowsStore(state => state.selectedRows)
 
   useEffect(() => {

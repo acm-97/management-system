@@ -5,8 +5,6 @@ import type {SubmitHandler} from 'react-hook-form'
 import {type RowSchema} from '@/hooks/useRowForm'
 import {cn} from '@/utils'
 
-type RowFieldProps = {type: string; rowsProps: any}
-
 const Input = ({
   children,
   helperText,
@@ -36,11 +34,12 @@ const Input = ({
         minWidth={16}
         extraWidth={props?.type !== 'number' ? 0 : 16}
         onBlur={handleSubmit(onBlur)}
+        autoComplete="off"
       />
     </div>
   )
 }
-const component = (type: string, rowsProps: any) => {
+const component = (type: string | undefined, rowsProps: any) => {
   switch (type) {
     case 'number':
       return {
@@ -59,9 +58,15 @@ const component = (type: string, rowsProps: any) => {
         type: 'number',
       }
     default:
-      return {}
+      return {
+        ...rowsProps,
+        Component: Input,
+        type: 'text',
+      }
   }
 }
+
+type RowFieldProps = {type?: string; rowsProps: any}
 
 function RowField({type, rowsProps}: RowFieldProps) {
   return <FormFieldControl {...component(type, rowsProps)} />

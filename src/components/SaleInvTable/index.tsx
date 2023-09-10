@@ -22,7 +22,10 @@ function SaleInvTable({rows, columns, rowsProps, isLoading}: SaleInvTableProps) 
   const selectAllRows = useRowsStore(state => state.selectAllRows)
   const removeAllSelectedRows = useRowsStore(state => state.removeAllSelectedRows)
 
-  const allSelected = rows?.every(row => selectedRows.includes(row?.rowId))
+  const allSelected = useMemo(
+    () => rows?.length > 0 && rows?.every(row => selectedRows.includes(row?.rowId)),
+    [rows, selectedRows],
+  )
 
   const onCheckedChange = (checked: CheckedState, id: string) => {
     if (checked) {
@@ -117,11 +120,11 @@ function SaleInvTable({rows, columns, rowsProps, isLoading}: SaleInvTableProps) 
                       }
                     />
                   </td>
-                  {columns?.map(
-                    (col: any, colIdx: number) =>
-                      col?.subHeaders?.map((subCol: any, subColIdx: number) => (
+                  {columns?.map((col: any, colIdx: number) => {
+                    if (col?.subHeaders?.length > 0) {
+                      return col?.subHeaders?.map((subCol: any, subColIdx: number) => (
                         <td
-                          key={crypto.randomUUID()}
+                          key={subCol?.fieldId}
                           className="group border border-solid border-slate-700 p-1 text-center"
                         >
                           <RowField
@@ -134,8 +137,24 @@ function SaleInvTable({rows, columns, rowsProps, isLoading}: SaleInvTableProps) 
                             }}
                           />
                         </td>
-                      )),
-                  )}
+                      ))
+                    }
+                    return (
+                      <td
+                        key={col?.fieldId}
+                        className="group border border-solid border-slate-700 p-1 text-center"
+                      >
+                        <RowField
+                          rowsProps={{
+                            ...rowsProps,
+                            name: `rows.${rowIdx}.info.${colIdx}.${col?.fieldId}`,
+                            row,
+                            dirtyRow: rowIdx,
+                          }}
+                        />
+                      </td>
+                    )
+                  })}
                 </tr>
               ))}
             </tbody>

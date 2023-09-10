@@ -1,6 +1,6 @@
 export {default as useToggle} from './useToggle'
 export {default as useColumnsSWR} from './useColumnsSWR'
 export {default as useProductsForm} from './useColumnsForm'
-export {useProductStore} from './useColumnsStore'
+export {useColumnsStore} from './useColumnsStore'
 export {useRowsStore} from './useRowsStore'
 export {default as useRowForm} from './useRowForm'

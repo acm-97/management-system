@@ -7,7 +7,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components'
-import {useProductStore, useColumnsSWR} from '@/hooks'
+import {useColumnsStore, useColumnsSWR} from '@/hooks'
 import {IconDotsVertical, IconPencil, IconTrashXFilled} from '@tabler/icons-react'
 import {useSalesSWR} from '@/modules/sales/hooks'
 
@@ -16,19 +16,25 @@ type DropdownProps = {column: any}
 function ColumnMenu({column}: DropdownProps) {
   const {deleteProduct} = useColumnsSWR()
   const {sales, updateSale} = useSalesSWR()
-  const openDialog = useProductStore(state => state.openDialog)
-  const setProduct = useProductStore(state => state.setProduct)
+  const openDialog = useColumnsStore(state => state.openDialog)
+  const setProduct = useColumnsStore(state => state.setProduct)
 
   const onEdit = () => {
     setProduct(column)
     openDialog()
   }
   const onDelete = () => {
+    let info: any[] | null = null
     sales?.data?.forEach((sale: any) => {
-      const info = sale?.info?.filter(
-        (item: any) => !column?.subHeaders?.some((subCol: any) => !!item[subCol?.fieldId]),
-      )
-      if (info.length !== sale?.info?.length) {
+      if (column?.subHeaders?.length > 0) {
+        info = sale?.info?.filter(
+          (item: any) => !column?.subHeaders?.some((subCol: any) => !!item[subCol?.fieldId]),
+        )
+      } else {
+        info = sale?.info?.filter((item: any) => !item[column?.fieldId])
+      }
+
+      if (info && info.length !== sale?.info?.length) {
         updateSale({id: sale?.id, payload: {info}})
       }
     })

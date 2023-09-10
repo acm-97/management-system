@@ -1,7 +1,7 @@
 import {useForm} from 'react-hook-form'
 import {z} from 'zod'
 import {zodResolver} from '@hookform/resolvers/zod'
-import {useProductStore} from './useColumnsStore'
+import {useColumnsStore} from './useColumnsStore'
 import useColumnsSWR from './useColumnsSWR'
 import {SPACES} from '@/constants'
 import {useEffect} from 'react'
@@ -26,8 +26,8 @@ export type ProductsFormProps = z.infer<typeof FormSchema>
 
 export default function useProductsForm() {
   const {createProduct, updateProduct} = useColumnsSWR()
-  const product = useProductStore(state => state.product)
-  const setProduct = useProductStore(state => state.setProduct)
+  const product = useColumnsStore(state => state.product)
+  const setProduct = useColumnsStore(state => state.setProduct)
 
   const {handleSubmit, reset, ...rest} = useForm<ProductsFormProps>({
     mode: 'onSubmit',
@@ -35,12 +35,14 @@ export default function useProductsForm() {
     resolver: zodResolver(FormSchema),
   })
 
+  const initialForm = {
+    name: product?.name ?? '',
+    color: product?.color ?? '#134e4a',
+    subHeaders: product?.subHeaders ?? [],
+  }
+
   useEffect(() => {
-    reset({
-      name: product?.name ?? '',
-      color: product?.color ?? '#134e4a',
-      subHeaders: product?.subHeaders ?? [],
-    })
+    reset(initialForm)
   }, [product])
 
   return {
@@ -55,14 +57,16 @@ export default function useProductsForm() {
         payload: {
           ...data,
           space: SPACES.SALES,
+          fieldId: `${data?.name?.replace?.(' ', '_').toLowerCase()}-${crypto.randomUUID()}`,
           ...(data.subHeaders.length > 0 && {
             subHeaders: data.subHeaders.map((item: any) => ({
               ...item,
-              fieldId: `${item.name}-${crypto.randomUUID()}`,
+              fieldId: `${item?.name?.replace?.(' ', '_').toLowerCase()}-${crypto.randomUUID()}`,
             })),
           }),
         },
       })
+      reset(initialForm)
     }),
     reset,
     ...rest,
