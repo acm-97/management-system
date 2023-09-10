@@ -1,7 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-const {
-  colors: {sky, orange, pink, ...colors},
-} = require('tailwindcss/defaultTheme')
+const plugin = require("tailwindcss/plugin");
 
 module.exports = {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
@@ -45,5 +43,9 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({addVariant}) {
+      addVariant('not-last-child', '&:not(:last-child)')
+    }),
+  ],
 }

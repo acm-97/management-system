@@ -5,6 +5,7 @@ export enum SPACES {
 
 export const swrConfig: any = {
   // throwOnError: false,
-  revalidateOnFocus: false,
   revalidateIfStale: false,
+  revalidateOnFocus: false,
+  revalidateOnReconnect: false,
 }

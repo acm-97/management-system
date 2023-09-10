@@ -42,39 +42,36 @@ function InvestTable() {
   })
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-center text-3xl font-bold">Control de Ventas</h2>
-        <div className="flex gap-4">
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <span className={cn(buttonVariants(), 'flex gap-2')}>
-                <IconTableOptions className="h-6 w-6 rounded-full border p-1 hover:cursor-pointer hover:ring-2" />
-                Acciones
-              </span>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="border-transparent bg-primary-dark shadow-sm shadow-white">
-              <DropdownMenuItem onClick={openDialog}>
-                Añadir Columnas
-                <DropdownMenuShortcut>
-                  <IconColumns className="h-4 w-4" />
-                </DropdownMenuShortcut>
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={async () => await createInvest({payload: {info: []}})}>
-                Añadir Filas
-                <DropdownMenuShortcut>
-                  <IconMenu2 className="h-4 w-4" />
-                </DropdownMenuShortcut>
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={onDeleteInvests} disabled={selectedRows.length === 0}>
-                Eliminar Filas
-                <DropdownMenuShortcut>
-                  <IconTrashXFilled className="h-4 w-4" />
-                </DropdownMenuShortcut>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+    <div className="flex w-full flex-col gap-6">
+      <div className="flex justify-end ">
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <span className={cn(buttonVariants(), 'flex gap-2')}>
+              <IconTableOptions className="h-6 w-6 rounded-full border p-1 hover:cursor-pointer hover:ring-2" />
+              Acciones
+            </span>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="border-transparent bg-primary-dark shadow-sm shadow-white">
+            <DropdownMenuItem onClick={openDialog}>
+              Añadir Columnas
+              <DropdownMenuShortcut>
+                <IconColumns className="h-4 w-4" />
+              </DropdownMenuShortcut>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={async () => await createInvest({payload: {info: []}})}>
+              Añadir Filas
+              <DropdownMenuShortcut>
+                <IconMenu2 className="h-4 w-4" />
+              </DropdownMenuShortcut>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={onDeleteInvests} disabled={selectedRows.length === 0}>
+              Eliminar Filas
+              <DropdownMenuShortcut>
+                <IconTrashXFilled className="h-4 w-4" />
+              </DropdownMenuShortcut>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
       <AddColumnDialog space={SPACES.INVEST} />

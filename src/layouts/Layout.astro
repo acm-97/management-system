@@ -1,4 +1,6 @@
 ---
+import {Header} from '@/components'
+import {ViewTransitions} from 'astro:transitions'
 import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import {SWRConfig} from 'swr'
@@ -10,7 +12,7 @@ const {title} = Astro.props
 ---
 
 <!doctype html>
-<html lang="es" class="bg-slate-900 font-sans text-slate-300">
+<html lang="es" class="[font-family: Papyrus, fantasy] bg-slate-900 text-slate-300">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Gestion de ventas" />
@@ -18,27 +20,33 @@ const {title} = Astro.props
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <ViewTransitions />
   </head>
-  <body>
-    <div class="m-auto min-h-screen w-full p-24">
-      <slot />
-    </div>
-    <ToastContainer
-      client:idle
-      position="top-right"
-      autoClose={5000}
-      newestOnTop={false}
-      rtl={false}
-      pauseOnFocusLoss
-      draggable={false}
-      pauseOnHover
-      theme="colored"
-    />
+  <body class="">
+    <Header />
+    <main class="flex flex-col justify-center gap-24 px-16 pt-16">
+      <div class="m-auto min-h-screen w-full">
+        <slot />
+      </div>
+      <ToastContainer
+        client:idle
+        position="top-right"
+        autoClose={5000}
+        newestOnTop={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover
+        theme="colored"
+      />
+    </main>
+    <script src="https://unpkg.com/@material-tailwind/html@latest/scripts/ripple.js"></script>
+
+    <style is:global>
+      :root {
+        font-family: 'Comic Sans MS', cursive;
+        color-sheme: dark white;
+      }
+    </style>
   </body>
 </html>
-
-<script src="https://unpkg.com/@material-tailwind/html@latest/scripts/ripple.js"></script>
-
-<style is:global>
-  color-sheme: dark white;
-</style>

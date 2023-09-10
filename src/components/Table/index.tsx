@@ -74,7 +74,7 @@ function Table({rows, columns, rowsProps, isLoading}: TableProps) {
                 )}
                 {columns?.map((col: any) => (
                   <th
-                    className="border border-solid border-slate-700 p-3 text-lg font-semibold "
+                    className="border border-solid border-slate-800 p-3 text-lg font-semibold "
                     style={{backgroundColor: col?.color}}
                     key={col?.uuid}
                     colSpan={col?.subHeaders?.length}
@@ -96,7 +96,7 @@ function Table({rows, columns, rowsProps, isLoading}: TableProps) {
                       col?.subHeaders?.map((subCol: any) => (
                         <th
                           key={subCol?.fieldId}
-                          className="border border-solid border-slate-700 p-2.5"
+                          className="border border-solid border-slate-800 p-2.5"
                           style={{backgroundColor: subCol?.color}}
                         >
                           {subCol?.name}
