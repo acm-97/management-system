@@ -1,0 +1,10 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import {InvestTable} from '@/modules/invest/components'
+---
+
+<Layout title="Control de Ventas">
+  <main class="flex flex-col justify-center gap-24">
+    <InvestTable client:idle />
+  </main>
+</Layout>

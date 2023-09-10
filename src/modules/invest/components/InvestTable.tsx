@@ -11,28 +11,29 @@ import {
   DropdownMenuTrigger,
 } from '@/components'
 import {useFieldArray} from 'react-hook-form'
-import {useSalesSWR} from '../hooks'
+import {useInvestsSWR} from '../hooks'
 import {IconColumns, IconMenu2, IconTableOptions, IconTrashXFilled} from '@tabler/icons-react'
 import {buttonVariants} from '@/components/Button'
 import {cn} from '@/utils'
 import {SPACES} from '@/constants'
 
-function SalesTable() {
-  const {sales, updateSale, createSale, deleteSale, refreshSales, isFetchingSales} = useSalesSWR()
-  const {control, handleSubmit, formState} = useRowForm(sales?.data)
-  const {products, isFetchingProducts} = useColumnsSWR()
+function InvestTable() {
+  const {invests, updateInvest, createInvest, deleteInvest, refreshInvests, isFetchingInvests} =
+    useInvestsSWR()
+  const {control, handleSubmit, formState} = useRowForm(invests?.data)
+  const {products, isFetchingProducts} = useColumnsSWR(SPACES.INVEST)
   const openDialog = useColumnsStore(state => state.openDialog)
   const selectedRows = useRowsStore(state => state.selectedRows)
 
   useEffect(() => {
     if (products?.data?.length === 0) {
-      sales?.data?.forEach(async (sale: any) => await deleteSale({id: sale?.id}))
+      invests?.data?.forEach(async (invest: any) => await deleteInvest({id: invest?.id}))
     }
   }, [products?.data?.length])
 
-  const onDeleteSales = () => {
-    selectedRows.forEach(async id => await deleteSale({id}))
-    refreshSales()
+  const onDeleteInvests = () => {
+    selectedRows.forEach(async id => await deleteInvest({id}))
+    refreshInvests()
   }
 
   const {fields} = useFieldArray({
@@ -59,13 +60,13 @@ function SalesTable() {
                   <IconColumns className="h-4 w-4" />
                 </DropdownMenuShortcut>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={async () => await createSale({payload: {info: []}})}>
+              <DropdownMenuItem onClick={async () => await createInvest({payload: {info: []}})}>
                 Añadir Filas
                 <DropdownMenuShortcut>
                   <IconMenu2 className="h-4 w-4" />
                 </DropdownMenuShortcut>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={onDeleteSales} disabled={selectedRows.length === 0}>
+              <DropdownMenuItem onClick={onDeleteInvests} disabled={selectedRows.length === 0}>
                 Eliminar Filas
                 <DropdownMenuShortcut>
                   <IconTrashXFilled className="h-4 w-4" />
@@ -76,16 +77,16 @@ function SalesTable() {
         </div>
       </div>
 
-      <AddColumnDialog space={SPACES.SALES} />
+      <AddColumnDialog space={SPACES.INVEST} />
 
       <Table
-        isLoading={isFetchingSales || isFetchingProducts}
+        isLoading={isFetchingInvests || isFetchingProducts}
         rows={fields}
         columns={products?.data}
-        rowsProps={{control, handleSubmit, isDirty: formState.isDirty, updateRow: updateSale}}
+        rowsProps={{control, handleSubmit, isDirty: formState.isDirty, updateRow: updateInvest}}
       />
     </div>
   )
 }
 
-export default memo(SalesTable)
+export default memo(InvestTable)

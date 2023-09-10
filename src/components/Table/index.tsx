@@ -8,14 +8,14 @@ import {useRowsStore} from '@/hooks'
 import Skeleton from './Skeleton'
 import {IconTableOff} from '@tabler/icons-react'
 
-type SaleInvTableProps = {
+type TableProps = {
   columns: Array<Record<string, any>>
   rows: Array<Record<string, any>>
   rowsProps: Record<string, any>
   isLoading: boolean
 }
 
-function SaleInvTable({rows, columns, rowsProps, isLoading}: SaleInvTableProps) {
+function Table({rows, columns, rowsProps, isLoading}: TableProps) {
   const selectedRows = useRowsStore(state => state.selectedRows)
   const addSelectedRows = useRowsStore(state => state.addSelectedRows)
   const removeSelectedRows = useRowsStore(state => state.removeSelectedRows)
@@ -165,4 +165,4 @@ function SaleInvTable({rows, columns, rowsProps, isLoading}: SaleInvTableProps) 
   )
 }
 
-export default memo(SaleInvTable)
+export default memo(Table)

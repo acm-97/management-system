@@ -4,7 +4,7 @@ import {toast} from 'react-toastify'
 import useSWR from 'swr'
 import useSWRMutation from 'swr/mutation'
 
-export default function useSalesSWR() {
+export default function useInvestSWR() {
   const {
     data: sales,
     isLoading: isFetchingSales,

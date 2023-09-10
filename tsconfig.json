@@ -23,7 +23,7 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["./src/**/*", "**/*.ts", "**/*.tsx"],
+  "include": ["./src/**/*", "**/*.ts", "**/*.tsx", "**/*.astro"],
 
   "exclude": ["node_modules"]
 }

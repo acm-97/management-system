@@ -1,6 +1,6 @@
 export enum SPACES {
   SALES = 'sales',
-  INVEST = 'invest',
+  INVEST = 'invests',
 }
 
 export const swrConfig: any = {

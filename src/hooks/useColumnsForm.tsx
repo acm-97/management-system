@@ -3,7 +3,7 @@ import {z} from 'zod'
 import {zodResolver} from '@hookform/resolvers/zod'
 import {useColumnsStore} from './useColumnsStore'
 import useColumnsSWR from './useColumnsSWR'
-import {SPACES} from '@/constants'
+import {type SPACES} from '@/constants'
 import {useEffect} from 'react'
 
 const FormSchema = z.object({
@@ -24,7 +24,7 @@ const FormSchema = z.object({
 
 export type ProductsFormProps = z.infer<typeof FormSchema>
 
-export default function useProductsForm() {
+export default function useProductsForm(space: SPACES) {
   const {createProduct, updateProduct} = useColumnsSWR()
   const product = useColumnsStore(state => state.product)
   const setProduct = useColumnsStore(state => state.setProduct)
@@ -56,7 +56,7 @@ export default function useProductsForm() {
       createProduct({
         payload: {
           ...data,
-          space: SPACES.SALES,
+          space,
           fieldId: `${data?.name?.replace?.(' ', '_').toLowerCase()}-${crypto.randomUUID()}`,
           ...(data.subHeaders.length > 0 && {
             subHeaders: data.subHeaders.map((item: any) => ({

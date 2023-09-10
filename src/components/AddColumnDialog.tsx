@@ -1,4 +1,5 @@
 import {Button, Dialog, FormFieldControl, TextField} from '@/components'
+import type {SPACES} from '@/constants'
 import {useColumnsStore, useProductsForm, useColumnsSWR} from '@/hooks'
 import {
   IconSquareRoundedPlusFilled,
@@ -9,7 +10,7 @@ import {
 import React, {memo} from 'react'
 import {useFieldArray} from 'react-hook-form'
 
-// type AddColumnDialogProps = {}
+type AddColumnDialogProps = {space: SPACES}
 
 const Icon = ({type}: {type: string}) => {
   switch (type) {
@@ -23,13 +24,13 @@ const Icon = ({type}: {type: string}) => {
   }
 }
 
-function AddColumnDialog() {
+function AddColumnDialog({space}: AddColumnDialogProps) {
   const {subHeaders} = useColumnsSWR()
   const isOpen = useColumnsStore(state => state.isOpen)
   const closeDialog = useColumnsStore(state => state.closeDialog)
   const setOpen = useColumnsStore(state => state.setOpen)
 
-  const {control, handleSubmit, reset} = useProductsForm()
+  const {control, handleSubmit, reset} = useProductsForm(space)
 
   const {fields, append, remove, replace} = useFieldArray({
     control,
