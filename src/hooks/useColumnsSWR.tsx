@@ -1,28 +1,29 @@
 import {useEffect} from 'react'
-import {SPACES} from '@/constants'
+import {SPACES, swrConfig} from '@/constants'
 import {client, errorProps} from '@/utils'
 import useSWR from 'swr'
 import {toast} from 'react-toastify'
 import useSWRMutation from 'swr/mutation'
 import {useSalesSWR} from '@/modules/sales/hooks'
 
-export default function useProductsSWR(space: string = SPACES.SALES) {
+export default function useColumnsSWR(space: string = SPACES.SALES) {
   const {refreshSales} = useSalesSWR()
 
   const {
     data: subHeaders,
     isLoading: isFetchingSubHeaders,
     error: subHeadersError,
-  } = useSWR('/product-sub-headers', client.get)
+  } = useSWR('/product-sub-headers', client.get, swrConfig)
 
   const {
     data: products,
     isLoading: isFetchingProducts,
     error,
-    mutate,
+    mutate: refreshColumns,
   } = useSWR(
     space ? `/products?filters[space][$eq]=${space}&populate[subHeaders][populate]=*` : null,
     client.get,
+    swrConfig,
   )
 
   useEffect(() => {
@@ -39,7 +40,7 @@ export default function useProductsSWR(space: string = SPACES.SALES) {
     client.post,
     {
       onSuccess: async () => {
-        await mutate()
+        await refreshColumns()
         refreshSales()
       },
       onError: error => toast.error(error, errorProps),
@@ -51,7 +52,7 @@ export default function useProductsSWR(space: string = SPACES.SALES) {
     client.put,
     {
       onSuccess: async () => {
-        await mutate()
+        await refreshColumns()
         refreshSales()
       },
       onError: error => toast.error(error, errorProps),
@@ -63,7 +64,7 @@ export default function useProductsSWR(space: string = SPACES.SALES) {
     client.delete,
     {
       onSuccess: async () => {
-        await mutate()
+        await refreshColumns()
         refreshSales()
       },
       onError: error => toast.error(error, errorProps),

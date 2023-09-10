@@ -12,7 +12,7 @@ import {cn} from '@/utils'
 import Button, {buttonVariants, type ButtonVariantsProps} from '../Button'
 
 type DialgProps = ButtonVariantsProps & {
-  trigger: string | ReactElement<any>
+  trigger?: string | ReactElement<any>
   title?: string | ReactElement<any>
   description?: string | ReactElement<any>
   children?: ReactNode
@@ -46,15 +46,17 @@ function Dialg({
 }: DialgProps) {
   return (
     <BaseDialog open={open} onOpenChange={onOpenChange}>
-      <DialogTrigger
-        className={cn(buttonVariants({variant, color, disabled}))}
-        disabled={disabled ?? false}
-        {...props}
-      >
-        {startIcon && startIcon}
-        {trigger}
-        {endIcon && endIcon}
-      </DialogTrigger>
+      {trigger && (
+        <DialogTrigger
+          className={cn(buttonVariants({variant, color, disabled}), className)}
+          disabled={disabled ?? false}
+          {...props}
+        >
+          {startIcon && startIcon}
+          {trigger}
+          {endIcon && endIcon}
+        </DialogTrigger>
+      )}
       <DialogContent>
         <DialogHeader>
           {title && <DialogTitle>{title}</DialogTitle>}

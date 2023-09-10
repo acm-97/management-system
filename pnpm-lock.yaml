@@ -17,6 +17,9 @@ dependencies:
   '@hookform/resolvers':
     specifier: ^3.3.1
     version: registry.npmjs.org/@hookform/resolvers@3.3.1(react-hook-form@7.46.1)
+  '@radix-ui/react-checkbox':
+    specifier: ^1.0.4
+    version: registry.npmjs.org/@radix-ui/react-checkbox@1.0.4(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
   '@radix-ui/react-dialog':
     specifier: ^1.0.4
     version: registry.npmjs.org/@radix-ui/react-dialog@1.0.4(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
@@ -44,12 +47,18 @@ dependencies:
   react:
     specifier: ^18.0.0
     version: registry.npmjs.org/react@18.2.0
+  react-autowidth-input:
+    specifier: ^1.0.9
+    version: registry.npmjs.org/react-autowidth-input@1.0.9(react-dom@18.2.0)(react-merge-refs@2.0.2)(react@18.2.0)
   react-dom:
     specifier: ^18.0.0
     version: registry.npmjs.org/react-dom@18.2.0(react@18.2.0)
   react-hook-form:
     specifier: ^7.46.1
     version: registry.npmjs.org/react-hook-form@7.46.1(react@18.2.0)
+  react-input-autosize:
+    specifier: ^3.0.0
+    version: registry.npmjs.org/react-input-autosize@3.0.0(react@18.2.0)
   react-toastify:
     specifier: ^9.1.3
     version: registry.npmjs.org/react-toastify@9.1.3(react-dom@18.2.0)(react@18.2.0)
@@ -79,6 +88,9 @@ devDependencies:
   '@types/react-dom':
     specifier: ^18.0.6
     version: registry.npmjs.org/@types/react-dom@18.2.7
+  '@types/react-input-autosize':
+    specifier: ^2.2.1
+    version: registry.npmjs.org/@types/react-input-autosize@2.2.1
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.4.0
     version: registry.npmjs.org/@typescript-eslint/eslint-plugin@6.6.0(@typescript-eslint/parser@6.6.0)(eslint@8.48.0)(typescript@5.2.2)
@@ -1301,6 +1313,37 @@ packages:
       react-dom: registry.npmjs.org/react-dom@18.2.0(react@18.2.0)
     dev: false
 
+  registry.npmjs.org/@radix-ui/react-checkbox@1.0.4(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-CBuGQa52aAYnADZVt/KBQzXrwx6TqnlwtcIPGtVt5JkkzQwMOLJjPukimhfKEr4GQNd43C+djUh5Ikopj8pSLg==, registry: https://registry.npmjs.cf/, tarball: https://registry.npmjs.org/@radix-ui/react-checkbox/-/react-checkbox-1.0.4.tgz}
+    id: registry.npmjs.org/@radix-ui/react-checkbox/1.0.4
+    name: '@radix-ui/react-checkbox'
+    version: 1.0.4
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+    dependencies:
+      '@babel/runtime': registry.npmjs.org/@babel/runtime@7.22.15
+      '@radix-ui/primitive': registry.npmjs.org/@radix-ui/primitive@1.0.1
+      '@radix-ui/react-compose-refs': registry.npmjs.org/@radix-ui/react-compose-refs@1.0.1(@types/react@18.2.21)(react@18.2.0)
+      '@radix-ui/react-context': registry.npmjs.org/@radix-ui/react-context@1.0.1(@types/react@18.2.21)(react@18.2.0)
+      '@radix-ui/react-presence': registry.npmjs.org/@radix-ui/react-presence@1.0.1(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-primitive': registry.npmjs.org/@radix-ui/react-primitive@1.0.3(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-use-controllable-state': registry.npmjs.org/@radix-ui/react-use-controllable-state@1.0.1(@types/react@18.2.21)(react@18.2.0)
+      '@radix-ui/react-use-previous': registry.npmjs.org/@radix-ui/react-use-previous@1.0.1(@types/react@18.2.21)(react@18.2.0)
+      '@radix-ui/react-use-size': registry.npmjs.org/@radix-ui/react-use-size@1.0.1(@types/react@18.2.21)(react@18.2.0)
+      '@types/react': registry.npmjs.org/@types/react@18.2.21
+      '@types/react-dom': registry.npmjs.org/@types/react-dom@18.2.7
+      react: registry.npmjs.org/react@18.2.0
+      react-dom: registry.npmjs.org/react-dom@18.2.0(react@18.2.0)
+    dev: false
+
   registry.npmjs.org/@radix-ui/react-collection@1.0.3(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-3SzW+0PW7yBBoQlT8wNcGtaxaD0XSu0uLUFgrtHY08Acx05TaHaOmVLR73c0j/cqpDy53KBMO7s0dx2wmOIDIA==, registry: https://registry.npmjs.cf/, tarball: https://registry.npmjs.org/@radix-ui/react-collection/-/react-collection-1.0.3.tgz}
     id: registry.npmjs.org/@radix-ui/react-collection/1.0.3
@@ -1813,6 +1856,23 @@ packages:
       react: registry.npmjs.org/react@18.2.0
     dev: false
 
+  registry.npmjs.org/@radix-ui/react-use-previous@1.0.1(@types/react@18.2.21)(react@18.2.0):
+    resolution: {integrity: sha512-cV5La9DPwiQ7S0gf/0qiD6YgNqM5Fk97Kdrlc5yBcrF3jyEZQwm7vYFqMo4IfeHgJXsRaMvLABFtd0OVEmZhDw==, registry: https://registry.npmjs.cf/, tarball: https://registry.npmjs.org/@radix-ui/react-use-previous/-/react-use-previous-1.0.1.tgz}
+    id: registry.npmjs.org/@radix-ui/react-use-previous/1.0.1
+    name: '@radix-ui/react-use-previous'
+    version: 1.0.1
+    peerDependencies:
+      '@types/react': '*'
+      react: ^16.8 || ^17.0 || ^18.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+    dependencies:
+      '@babel/runtime': registry.npmjs.org/@babel/runtime@7.22.15
+      '@types/react': registry.npmjs.org/@types/react@18.2.21
+      react: registry.npmjs.org/react@18.2.0
+    dev: false
+
   registry.npmjs.org/@radix-ui/react-use-rect@1.0.1(@types/react@18.2.21)(react@18.2.0):
     resolution: {integrity: sha512-Cq5DLuSiuYVKNU8orzJMbl15TXilTnJKUCltMVQg53BQOF1/C5toAaGrowkgksdBQ9H+SRL23g0HDmg9tvmxXw==, registry: https://registry.npmjs.cf/, tarball: https://registry.npmjs.org/@radix-ui/react-use-rect/-/react-use-rect-1.0.1.tgz}
     id: registry.npmjs.org/@radix-ui/react-use-rect/1.0.1
@@ -1992,6 +2052,14 @@ packages:
     version: 18.2.7
     dependencies:
       '@types/react': registry.npmjs.org/@types/react@18.2.21
+
+  registry.npmjs.org/@types/react-input-autosize@2.2.1:
+    resolution: {integrity: sha512-RxzEjd4gbLAAdLQ92Q68/AC+TfsAKTc4evsArUH1aIShIMqQMIMjsxoSnwyjtbFTO/AGIW/RQI94XSdvOxCz/w==, registry: https://registry.npmjs.cf/, tarball: https://registry.npmjs.org/@types/react-input-autosize/-/react-input-autosize-2.2.1.tgz}
+    name: '@types/react-input-autosize'
+    version: 2.2.1
+    dependencies:
+      '@types/react': registry.npmjs.org/@types/react@18.2.21
+    dev: true
 
   registry.npmjs.org/@types/react@18.2.21:
     resolution: {integrity: sha512-neFKG/sBAwGxHgXiIxnbm3/AAVQ/cMRS93hvBpg8xYRbeQSPVABp9U2bRnPf0iI4+Ucdv3plSxKK+3CW2ENJxA==, registry: https://registry.npmjs.cf/, tarball: https://registry.npmjs.org/@types/react/-/react-18.2.21.tgz}
@@ -6477,6 +6545,22 @@ packages:
     dev: false
     optional: true
 
+  registry.npmjs.org/react-autowidth-input@1.0.9(react-dom@18.2.0)(react-merge-refs@2.0.2)(react@18.2.0):
+    resolution: {integrity: sha512-pNGJ7Qd/wgx13H2FyQHfRcieMlgg1jfw/R6OlNI8jYngX/sJhi0fOBTdcVPfgCfqDkchhJ/BwhVW2pUt0XIPVA==, registry: https://registry.npmjs.cf/, tarball: https://registry.npmjs.org/react-autowidth-input/-/react-autowidth-input-1.0.9.tgz}
+    id: registry.npmjs.org/react-autowidth-input/1.0.9
+    name: react-autowidth-input
+    version: 1.0.9
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      react: '>=17'
+      react-dom: '>=17'
+      react-merge-refs: '>=2'
+    dependencies:
+      react: registry.npmjs.org/react@18.2.0
+      react-dom: registry.npmjs.org/react-dom@18.2.0(react@18.2.0)
+      react-merge-refs: registry.npmjs.org/react-merge-refs@2.0.2
+    dev: false
+
   registry.npmjs.org/react-dom@18.2.0(react@18.2.0):
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==, registry: https://registry.npmjs.cf/, tarball: https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz}
     id: registry.npmjs.org/react-dom/18.2.0
@@ -6502,10 +6586,28 @@ packages:
       react: registry.npmjs.org/react@18.2.0
     dev: false
 
+  registry.npmjs.org/react-input-autosize@3.0.0(react@18.2.0):
+    resolution: {integrity: sha512-nL9uS7jEs/zu8sqwFE5MAPx6pPkNAriACQ2rGLlqmKr2sPGtN7TXTyDdQt4lbNXVx7Uzadb40x8qotIuru6Rhg==, registry: https://registry.npmjs.cf/, tarball: https://registry.npmjs.org/react-input-autosize/-/react-input-autosize-3.0.0.tgz}
+    id: registry.npmjs.org/react-input-autosize/3.0.0
+    name: react-input-autosize
+    version: 3.0.0
+    peerDependencies:
+      react: ^16.3.0 || ^17.0.0
+    dependencies:
+      prop-types: registry.npmjs.org/prop-types@15.8.1
+      react: registry.npmjs.org/react@18.2.0
+    dev: false
+
   registry.npmjs.org/react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==, registry: https://registry.npmjs.cf/, tarball: https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz}
     name: react-is
     version: 16.13.1
+
+  registry.npmjs.org/react-merge-refs@2.0.2:
+    resolution: {integrity: sha512-V5BGTwGa2r+/t0A/BZMS6L7VPXY0CU8xtAhkT3XUoI1WJJhhtvulvoiZkJ5Jt9YAW23m4xFWmhQ+C5HwjtTFhQ==, registry: https://registry.npmjs.cf/, tarball: https://registry.npmjs.org/react-merge-refs/-/react-merge-refs-2.0.2.tgz}
+    name: react-merge-refs
+    version: 2.0.2
+    dev: false
 
   registry.npmjs.org/react-refresh@0.14.0:
     resolution: {integrity: sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==, registry: https://registry.npmjs.cf/, tarball: https://registry.npmjs.org/react-refresh/-/react-refresh-0.14.0.tgz}

@@ -94,7 +94,7 @@ class Client implements ClientProps {
   }
 
   async delete(url: string, {arg}: {arg: any}) {
-    const {data, id, ...configRest} = arg
+    const {payload, id, ...configRest} = arg
     return await api
       .delete(`${url}/${id as string}`, {...configRest})
       .then((res: any) => res)

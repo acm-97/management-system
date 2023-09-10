@@ -1,18 +1,5 @@
-import {
-  Button,
-  Dialog,
-  FormFieldControl,
-  TextField,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuShortcut,
-  DropdownMenuTrigger,
-} from '@/components'
-import {buttonVariants} from '@/components/Button'
-import {useProductStore, useProductsForm, useProductsSWR} from '@/hooks'
-import {cn} from '@/utils'
-import {MinusCircledIcon, PlusCircledIcon} from '@radix-ui/react-icons'
+import {Button, Dialog, FormFieldControl, TextField} from '@/components'
+import {useProductStore, useProductsForm, useColumnsSWR} from '@/hooks'
 import {
   IconSquareRoundedPlusFilled,
   IconSquareRoundedMinusFilled,
@@ -22,22 +9,22 @@ import {
 import React, {memo} from 'react'
 import {useFieldArray} from 'react-hook-form'
 
-// type AddProductDialogProps = {}
+// type AddColumnDialogProps = {}
 
 const Icon = ({type}: {type: string}) => {
   switch (type) {
     case 'number':
       return <Icon123 size={18} className="text-whi" />
     case 'currency':
-      return <IconCurrencyDollar size={16} className="text-whi" />
+      return <IconCurrencyDollar size={14} className="text-whi" />
 
     default:
       return null
   }
 }
 
-function AddProductDialog() {
-  const {subHeaders} = useProductsSWR()
+function AddColumnDialog() {
+  const {subHeaders} = useColumnsSWR()
   const isOpen = useProductStore(state => state.isOpen)
   const closeDialog = useProductStore(state => state.closeDialog)
   const setOpen = useProductStore(state => state.setOpen)
@@ -76,10 +63,11 @@ function AddProductDialog() {
       onOpenChange={setOpen}
       onSave={onAddProduct}
       onCancel={onCancel}
-      trigger={'Producto'}
-      startIcon={<IconSquareRoundedPlusFilled size={20} />}
+      // trigger="Añadir producto"
       title="Añadir producto"
       description="Un producto representa una columna la cual puede tener tantas sub-columnas como desee"
+      variant="text"
+      // className="text-sm font-normal capitalize text-gray-300"
     >
       <form className="flex w-full flex-col gap-6" autoComplete="off">
         <div className="flex w-full items-center gap-5">
@@ -137,11 +125,7 @@ function AddProductDialog() {
                     type: item?.type,
                   })
                 }
-                endIcon={
-                  <DropdownMenuShortcut>
-                    <Icon type={item?.type} />
-                  </DropdownMenuShortcut>
-                }
+                endIcon={<Icon type={item?.type} />}
               >
                 {item.name}
               </Button>
@@ -153,4 +137,4 @@ function AddProductDialog() {
   )
 }
 
-export default memo(AddProductDialog)
+export default memo(AddColumnDialog)

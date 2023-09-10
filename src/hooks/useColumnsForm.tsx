@@ -1,8 +1,8 @@
 import {useForm} from 'react-hook-form'
 import {z} from 'zod'
 import {zodResolver} from '@hookform/resolvers/zod'
-import {useProductStore} from './useProductStore'
-import useProductsSWR from './useProductsSWR'
+import {useProductStore} from './useColumnsStore'
+import useColumnsSWR from './useColumnsSWR'
 import {SPACES} from '@/constants'
 import {useEffect} from 'react'
 
@@ -17,19 +17,15 @@ const FormSchema = z.object({
         message: 'Un nombre para la sub-columna es requerido.',
       }),
       color: z.string().regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/),
+      type: z.string(),
     }),
   ),
 })
 
 export type ProductsFormProps = z.infer<typeof FormSchema>
 
-// const initialSubHeader = {
-//   name: '',
-//   color: '#0f766e',
-// }
-
 export default function useProductsForm() {
-  const {createProduct, updateProduct} = useProductsSWR()
+  const {createProduct, updateProduct} = useColumnsSWR()
   const product = useProductStore(state => state.product)
   const setProduct = useProductStore(state => state.setProduct)
 
@@ -60,12 +56,14 @@ export default function useProductsForm() {
           ...data,
           space: SPACES.SALES,
           ...(data.subHeaders.length > 0 && {
-            subHeaders: data.subHeaders.map((item: any) => ({...item, uuid: crypto.randomUUID()})),
+            subHeaders: data.subHeaders.map((item: any) => ({
+              ...item,
+              fieldId: `${item.name}-${crypto.randomUUID()}`,
+            })),
           }),
         },
       })
     }),
-    // initialSubHeader,
     reset,
     ...rest,
   }
