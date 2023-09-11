@@ -20,16 +20,16 @@ import {SPACES} from '@/constants'
 function InvestTable() {
   const {invests, updateInvest, createInvest, deleteInvest, refreshInvests, isFetchingInvests} =
     useInvestsSWR()
-  const {control, handleSubmit, formState} = useRowForm(invests?.data)
-  const {products, isFetchingProducts} = useColumnsSWR(SPACES.INVEST)
+  const {control, handleSubmit, ...form} = useRowForm(invests?.data)
+  const {columns, isFetchingColumns} = useColumnsSWR(SPACES.INVEST)
   const openDialog = useColumnsStore(state => state.openDialog)
   const selectedRows = useRowsStore(state => state.selectedRows)
 
   useEffect(() => {
-    if (products?.data?.length === 0) {
+    if (columns?.data?.length === 0) {
       invests?.data?.forEach(async (invest: any) => await deleteInvest({id: invest?.id}))
     }
-  }, [products?.data?.length])
+  }, [columns?.data?.length])
 
   const onDeleteInvests = () => {
     selectedRows.forEach(async id => await deleteInvest({id}))
@@ -77,10 +77,11 @@ function InvestTable() {
       <AddColumnDialog space={SPACES.INVEST} />
 
       <Table
-        isLoading={isFetchingInvests || isFetchingProducts}
+        isLoading={isFetchingInvests || isFetchingColumns}
+        space={SPACES.INVEST}
         rows={fields}
-        columns={products?.data}
-        rowsProps={{control, handleSubmit, isDirty: formState.isDirty, updateRow: updateInvest}}
+        columns={columns?.data}
+        rowsProps={{control, handleSubmit, updateRow: updateInvest, form}}
       />
     </div>
   )

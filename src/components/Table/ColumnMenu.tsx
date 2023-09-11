@@ -10,17 +10,18 @@ import {
 import {useColumnsStore, useColumnsSWR} from '@/hooks'
 import {IconDotsVertical, IconPencil, IconTrashXFilled} from '@tabler/icons-react'
 import {useSalesSWR} from '@/modules/sales/hooks'
+import type {SPACES} from '@/constants'
 
-type DropdownProps = {column: any}
+type DropdownProps = {column: any; space: SPACES}
 
-function ColumnMenu({column}: DropdownProps) {
-  const {deleteProduct} = useColumnsSWR()
+function ColumnMenu({column, space}: DropdownProps) {
+  const {deleteColumn} = useColumnsSWR(space)
   const {sales, updateSale} = useSalesSWR()
   const openDialog = useColumnsStore(state => state.openDialog)
-  const setProduct = useColumnsStore(state => state.setProduct)
+  const setColumn = useColumnsStore(state => state.setColumn)
 
   const onEdit = () => {
-    setProduct(column)
+    setColumn(column)
     openDialog()
   }
   const onDelete = () => {
@@ -38,7 +39,7 @@ function ColumnMenu({column}: DropdownProps) {
         updateSale({id: sale?.id, payload: {info}})
       }
     })
-    deleteProduct({id: column?.id})
+    deleteColumn({id: column?.id})
   }
 
   return (

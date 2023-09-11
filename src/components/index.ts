@@ -4,5 +4,5 @@ export {default as Dialog} from './Dialog'
 export {default as Header} from './Header.astro'
 export * from './Dropdown'
 export * from './Form'
-
+export * from './Popover'
 export {default as AddColumnDialog} from './AddColumnDialog'

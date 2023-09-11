@@ -5,9 +5,11 @@ import useSWR from 'swr'
 import {toast} from 'react-toastify'
 import useSWRMutation from 'swr/mutation'
 import {useSalesSWR} from '@/modules/sales/hooks'
+import {useInvestsSWR} from '@/modules/invest/hooks'
 
-export default function useColumnsSWR(space: string = SPACES.SALES) {
+export default function useColumnsSWR(space: string) {
   const {refreshSales} = useSalesSWR()
+  const {refreshInvests} = useInvestsSWR()
 
   const {
     data: subHeaders,
@@ -16,8 +18,8 @@ export default function useColumnsSWR(space: string = SPACES.SALES) {
   } = useSWR('/product-sub-headers', client.get, swrConfig)
 
   const {
-    data: products,
-    isLoading: isFetchingProducts,
+    data: columns,
+    isLoading: isFetchingColumns,
     error,
     mutate: refreshColumns,
   } = useSWR(
@@ -35,52 +37,55 @@ export default function useColumnsSWR(space: string = SPACES.SALES) {
     }
   }, [error, subHeadersError])
 
-  const {trigger: createProduct, isMutating: isCreatingProduct} = useSWRMutation(
+  const {trigger: createColumn, isMutating: isCreatingColumn} = useSWRMutation(
     `/products`,
     client.post,
     {
-      onSuccess: async () => {
-        await refreshColumns()
-        refreshSales()
+      onSuccess: () => {
+        refreshColumns()
+        space === SPACES.SALES && refreshSales()
+        space === SPACES.INVEST && refreshInvests()
       },
       onError: error => toast.error(error, errorProps),
     },
   )
 
-  const {trigger: updateProduct, isMutating: isUpdatingProduct} = useSWRMutation(
+  const {trigger: updateColumn, isMutating: isUpdatingColumn} = useSWRMutation(
     `/products`,
     client.put,
     {
-      onSuccess: async () => {
-        await refreshColumns()
-        refreshSales()
+      onSuccess: () => {
+        refreshColumns()
+        space === SPACES.SALES && refreshSales()
+        space === SPACES.INVEST && refreshInvests()
       },
       onError: error => toast.error(error, errorProps),
     },
   )
 
-  const {trigger: deleteProduct, isMutating: isDeletingProduct} = useSWRMutation(
+  const {trigger: deleteColumn, isMutating: isDeletingColumn} = useSWRMutation(
     `/products`,
     client.delete,
     {
-      onSuccess: async () => {
-        await refreshColumns()
-        refreshSales()
+      onSuccess: () => {
+        refreshColumns()
+        space === SPACES.SALES && refreshSales()
+        space === SPACES.INVEST && refreshInvests()
       },
       onError: error => toast.error(error, errorProps),
     },
   )
 
   return {
-    products,
-    isFetchingProducts,
+    columns,
+    isFetchingColumns,
     subHeaders,
     isFetchingSubHeaders,
-    createProduct,
-    isCreatingProduct,
-    updateProduct,
-    isUpdatingProduct,
-    deleteProduct,
-    isDeletingProduct,
+    createColumn,
+    isCreatingColumn,
+    updateColumn,
+    isUpdatingColumn,
+    deleteColumn,
+    isDeletingColumn,
   }
 }

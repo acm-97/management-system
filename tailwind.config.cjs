@@ -30,6 +30,7 @@ module.exports = {
         },
       },
       backgroundColor: {
+        background: "#0f172a",
         primary: {
           main: '#0c4a6e',
           light: '#0ea5e9',

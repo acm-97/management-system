@@ -24,7 +24,7 @@ export default function useInvestsSWR() {
     '/invests',
     client.put,
     {
-      // onSuccess: async () => await refreshInvests(),
+      onSuccess: async () => await refreshInvests(),
       onError: error => toast.error(error, errorProps),
     },
   )

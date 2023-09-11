@@ -11,6 +11,7 @@ export const buttonVariants = cva(
       variant: {
         contained: 'rounded-md',
         text: 'border-none !bg-transparent hover:!bg-transparent',
+        outlined: 'border-2 border-slate-700 !bg-transparent hover:!bg-transparent',
       },
       color: {
         primary: ['bg-primary-main hover:bg-primary-dark'],
@@ -25,14 +26,18 @@ export const buttonVariants = cva(
         color: ['primary', 'error', 'inherit'],
       },
       {
+        variant: ['outlined'],
+        color: ['primary', 'error', 'inherit'],
+      },
+      {
         variant: ['text'],
         color: ['primary'],
-        className: 'p-0 text-primary-light',
+        className: 'text-primary-light p-0',
       },
       {
         variant: ['text'],
         color: ['error'],
-        className: 'p-0 text-error-main',
+        className: 'text-error-main p-0',
       },
       {
         variant: ['text'],

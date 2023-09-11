@@ -9,7 +9,7 @@ export const inputVariants = cva(
   {
     variants: {
       error: {
-        true: ' !border-pink-500 !border-t-transparent placeholder-shown:!border-pink-500 focus:border-pink-500 focus:!border-t-transparent',
+        true: ' !border-pink-500 !border-t-transparent placeholder-shown:!border-pink-500 focus:!border-pink-500 focus:!border-t-transparent',
         false: '',
       },
     },
@@ -65,7 +65,9 @@ const TextField = React.forwardRef<HTMLInputElement, InputProps>(
           autoComplete="off"
         />
         {label && <label className={cn(labelVariants({error}))}>{label}</label>}
-        {error && <span className="absolute -bottom-6 left-3 text-pink-500">{helperText}</span>}
+        {error && (
+          <span className="absolute -bottom-6 left-3 text-sm text-pink-500">{helperText}</span>
+        )}
       </div>
     )
   },

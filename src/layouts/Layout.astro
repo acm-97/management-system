@@ -12,7 +12,7 @@ const {title} = Astro.props
 ---
 
 <!doctype html>
-<html lang="es" class="[font-family: Papyrus, fantasy] bg-slate-900 text-slate-300">
+<html lang="es" class="[font-family: Papyrus, fantasy] bg-background text-slate-300">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Gestion de ventas" />
@@ -22,10 +22,10 @@ const {title} = Astro.props
     <title>{title}</title>
     <ViewTransitions />
   </head>
-  <body class="">
+  <body class="h-[100lvh]">
     <Header />
     <main class="flex flex-col justify-center gap-24 px-16 pt-16">
-      <div class="m-auto min-h-screen w-full">
+      <div class="m-auto w-full">
         <slot />
       </div>
       <ToastContainer

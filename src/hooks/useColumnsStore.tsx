@@ -2,18 +2,18 @@ import {create} from 'zustand'
 
 type Store = {
   isOpen: boolean
-  product: Record<string, any> | null
+  column: Record<string, any> | null
   setOpen: (open: boolean) => void
-  setProduct: (product: Record<string, any> | null) => void
+  setColumn: (column: Record<string, any> | null) => void
   openDialog: () => void
   closeDialog: () => void
 }
 
 export const useColumnsStore = create<Store>()(set => ({
   isOpen: false,
-  product: null,
+  column: null,
   setOpen: (isOpen: boolean) => set(() => ({isOpen})),
-  setProduct: (product: Record<string, any> | null) => set(() => ({product})),
+  setColumn: (column: Record<string, any> | null) => set(() => ({column})),
   openDialog: () => set(() => ({isOpen: true})),
   closeDialog: () => set(() => ({isOpen: false})),
 }))

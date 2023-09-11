@@ -19,16 +19,16 @@ import {SPACES} from '@/constants'
 
 function SalesTable() {
   const {sales, updateSale, createSale, deleteSale, refreshSales, isFetchingSales} = useSalesSWR()
-  const {control, handleSubmit, formState} = useRowForm(sales?.data)
-  const {products, isFetchingProducts} = useColumnsSWR()
+  const {control, handleSubmit, ...form} = useRowForm(sales?.data)
+  const {columns, isFetchingColumns} = useColumnsSWR(SPACES.SALES)
   const openDialog = useColumnsStore(state => state.openDialog)
   const selectedRows = useRowsStore(state => state.selectedRows)
 
   useEffect(() => {
-    if (products?.data?.length === 0) {
+    if (columns?.data?.length === 0) {
       sales?.data?.forEach(async (sale: any) => await deleteSale({id: sale?.id}))
     }
-  }, [products?.data?.length])
+  }, [columns?.data?.length])
 
   const onDeleteSales = () => {
     selectedRows.forEach(async id => await deleteSale({id}))
@@ -76,10 +76,11 @@ function SalesTable() {
       <AddColumnDialog space={SPACES.SALES} />
 
       <Table
-        isLoading={isFetchingSales || isFetchingProducts}
+        isLoading={isFetchingSales || isFetchingColumns}
+        space={SPACES.SALES}
         rows={fields}
-        columns={products?.data}
-        rowsProps={{control, handleSubmit, isDirty: formState.isDirty, updateRow: updateSale}}
+        columns={columns?.data}
+        rowsProps={{control, handleSubmit, form, updateRow: updateSale}}
       />
     </div>
   )

@@ -4,18 +4,21 @@ import RowField from './RowField'
 import {Checkbox} from '../Form'
 import type {CheckedState} from '@radix-ui/react-checkbox'
 import {cn} from '@/utils'
-import {useRowsStore} from '@/hooks'
+import {useColumnsSWR, useRowsStore} from '@/hooks'
 import Skeleton from './Skeleton'
 import {IconTableOff} from '@tabler/icons-react'
+import type {SPACES} from '@/constants'
 
 type TableProps = {
   columns: Array<Record<string, any>>
   rows: Array<Record<string, any>>
   rowsProps: Record<string, any>
   isLoading: boolean
+  space: SPACES
 }
 
-function Table({rows, columns, rowsProps, isLoading}: TableProps) {
+function Table({rows, columns, rowsProps, isLoading, space}: TableProps) {
+  const {subHeaders} = useColumnsSWR(space)
   const selectedRows = useRowsStore(state => state.selectedRows)
   const addSelectedRows = useRowsStore(state => state.addSelectedRows)
   const removeSelectedRows = useRowsStore(state => state.removeSelectedRows)
@@ -44,7 +47,7 @@ function Table({rows, columns, rowsProps, isLoading}: TableProps) {
   }
 
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-4">
+    <div className="flex w-full flex-col items-center justify-center gap-4 ">
       <div
         className={
           'w-full overflow-hidden overflow-x-auto rounded-lg border border-slate-700 shadow-sm shadow-white'
@@ -81,7 +84,7 @@ function Table({rows, columns, rowsProps, isLoading}: TableProps) {
                   >
                     <span className="flex items-center justify-center gap-4 ">
                       {col?.name}
-                      <ColumnMenu column={col} />
+                      <ColumnMenu column={col} space={space} />
                     </span>
                   </th>
                 ))}
@@ -122,22 +125,31 @@ function Table({rows, columns, rowsProps, isLoading}: TableProps) {
                   </td>
                   {columns?.map((col: any, colIdx: number) => {
                     if (col?.subHeaders?.length > 0) {
-                      return col?.subHeaders?.map((subCol: any, subColIdx: number) => (
-                        <td
-                          key={subCol?.fieldId}
-                          className="group border border-solid border-slate-700 p-1 text-center"
-                        >
-                          <RowField
-                            type={subCol?.type}
-                            rowsProps={{
-                              ...rowsProps,
-                              name: `rows.${rowIdx}.info.${colIdx}.${subCol?.fieldId}`,
-                              row,
-                              dirtyRow: rowIdx,
-                            }}
-                          />
-                        </td>
-                      ))
+                      return col?.subHeaders?.map((subCol: any, subColIdx: number) => {
+                        const name = `rows.${rowIdx}.info.${colIdx}.${subCol?.fieldId}`
+                        const value = rowsProps.form.getValues(name)
+                        if (!value) {
+                          rowsProps.form.register(name)
+                          rowsProps.form.setValue(name, 0)
+                        }
+                        const filledRow = rowsProps.form.getValues('rows')[rowIdx]
+                        return (
+                          <td
+                            key={subCol?.fieldId}
+                            className="group border border-solid border-slate-700 p-1 text-center"
+                          >
+                            <RowField
+                              type={subCol?.type}
+                              rowsProps={{
+                                ...rowsProps,
+                                row: filledRow,
+                                name,
+                                dirtyRow: rowIdx,
+                              }}
+                            />
+                          </td>
+                        )
+                      })
                     }
                     return (
                       <td

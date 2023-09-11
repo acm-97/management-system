@@ -1,8 +1,8 @@
 import {Button, Dialog, FormFieldControl, TextField} from '@/components'
 import type {SPACES} from '@/constants'
-import {useColumnsStore, useProductsForm, useColumnsSWR} from '@/hooks'
+import {useColumnsStore, useColumnsForm, useColumnsSWR} from '@/hooks'
 import {
-  IconSquareRoundedPlusFilled,
+  IconCalendarEvent,
   IconSquareRoundedMinusFilled,
   Icon123,
   IconCurrencyDollar,
@@ -14,33 +14,43 @@ type AddColumnDialogProps = {space: SPACES}
 
 const Icon = ({type}: {type: string}) => {
   switch (type) {
+    case 'date':
+      return <IconCalendarEvent size={14} />
     case 'number':
-      return <Icon123 size={18} className="text-whi" />
+      return <Icon123 size={18} />
+    case 'totalNumber':
+      return <Icon123 size={18} />
     case 'currency':
-      return <IconCurrencyDollar size={14} className="text-whi" />
-
+      return <IconCurrencyDollar size={14} />
+    case 'totalCurrency':
+      return <IconCurrencyDollar size={14} />
     default:
       return null
   }
 }
 
 function AddColumnDialog({space}: AddColumnDialogProps) {
-  const {subHeaders} = useColumnsSWR()
+  const {subHeaders} = useColumnsSWR(space)
   const isOpen = useColumnsStore(state => state.isOpen)
   const closeDialog = useColumnsStore(state => state.closeDialog)
   const setOpen = useColumnsStore(state => state.setOpen)
 
-  const {control, handleSubmit, reset} = useProductsForm(space)
+  const {
+    control,
+    handleSubmit,
+    formState: {isValid},
+    reset,
+  } = useColumnsForm(space)
 
   const {fields, append, remove, replace} = useFieldArray({
     control,
     name: 'subHeaders',
   })
 
-  const onAddProduct = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onAddColumn = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     handleSubmit()
-    closeDialog()
+    isValid && closeDialog()
   }
 
   const onAddSubCol = (e: React.MouseEvent<HTMLButtonElement>, data: any) => {
@@ -62,11 +72,11 @@ function AddColumnDialog({space}: AddColumnDialogProps) {
     <Dialog
       open={isOpen}
       onOpenChange={setOpen}
-      onSave={onAddProduct}
+      onSave={onAddColumn}
       onCancel={onCancel}
-      // trigger="Añadir producto"
-      title="Añadir producto"
-      description="Un producto representa una columna la cual puede tener tantas sub-columnas como desee"
+      // trigger="Añadir column"
+      title="Añadir column"
+      description="Un column representa una columna la cual puede tener tantas sub-columnas como desee"
       variant="text"
       // className="text-sm font-normal capitalize text-gray-300"
     >
@@ -77,7 +87,7 @@ function AddColumnDialog({space}: AddColumnDialogProps) {
             Component={TextField}
             name="name"
             type="text"
-            label="Producto"
+            label="Column"
           />
           <FormFieldControl
             control={control}
@@ -114,7 +124,7 @@ function AddColumnDialog({space}: AddColumnDialogProps) {
 
         <div className="mt-4 rounded-md bg-slate-800 p-4">
           <h4 className="mb-3.5 text-gray-300">Añadir sub-columns :</h4>
-          <div className="flex items-center justify-start gap-3">
+          <div className="flex flex-wrap items-center justify-start gap-3">
             {subHeaders?.data?.map((item: any) => (
               <Button
                 className="!py-0.5 px-2 !text-[12px]"
