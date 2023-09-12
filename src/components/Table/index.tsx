@@ -18,7 +18,7 @@ type TableProps = {
 }
 
 function Table({rows, columns, rowsProps, isLoading, space}: TableProps) {
-  const {subHeaders} = useColumnsSWR(space)
+  // const {subHeaders} = useColumnsSWR(space)
   const selectedRows = useRowsStore(state => state.selectedRows)
   const addSelectedRows = useRowsStore(state => state.addSelectedRows)
   const removeSelectedRows = useRowsStore(state => state.removeSelectedRows)

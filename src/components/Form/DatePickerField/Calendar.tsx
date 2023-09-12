@@ -23,7 +23,7 @@ export default function Calendar({
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
-      className={cn('p-3', className)}
+      className={cn('p-3 ', className)}
       classNames={{
         months: 'flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0',
         month: 'space-y-4 text-white',
@@ -41,9 +41,9 @@ export default function Calendar({
         head_cell: 'opacity-80 rounded-md w-8 font-normal text-[0.8rem]',
         row: 'flex w-full mt-2',
         cell: cn(
-          'relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent hover:bg-primary-main hover:rounded-lg',
+          'relative p-0 text-center text-sm focus-within:relative focus-within:z-20  hover:bg-primary-light hover:rounded-lg',
           props.mode === 'range'
-            ? '[&:has(>.day-range-end)]:rounded-r-md [&:has(>.day-range-start)]:rounded-l-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md'
+            ? '[&:has(>.day-range-end)]:rounded-r-md [&:has(>.day-range-end)]:bg-primary-light [&:has(>.day-range-start)]:bg-primary-light [&:has(>.day-range-start)]:rounded-l-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md'
             : '[&:has([aria-selected])]:rounded-md',
         ),
         day: cn(
@@ -56,7 +56,7 @@ export default function Calendar({
         day_today: 'bg-accent text-accent-foreground',
         day_outside: 'opacity-40',
         day_disabled: ' opacity-50',
-        day_range_middle: 'aria-selected:bg-accent aria-selected:text-accent-foreground',
+        day_range_middle: 'aria-selected:rounded-none aria-selected:!bg-primary-dark',
         day_hidden: 'invisible',
         ...classNames,
       }}
