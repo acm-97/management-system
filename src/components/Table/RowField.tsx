@@ -4,6 +4,7 @@ import AutowidthInput from 'react-autowidth-input'
 import type {SubmitHandler} from 'react-hook-form'
 import {type RowSchema} from '@/hooks/useRowForm'
 import {cn, getNumbers, getCurrency} from '@/utils'
+import {columnTypes} from '@/constants'
 
 const Input = ({
   children,
@@ -74,10 +75,10 @@ type RowFieldProps = {type?: string; rowsProps: any}
 
 function RowField({type, rowsProps}: RowFieldProps) {
   switch (type) {
-    case 'number':
-      return <FormFieldControl Component={Input} type="number" columnType="number" {...rowsProps} />
+    case columnTypes.NUMBER:
+      return <FormFieldControl Component={Input} type="number" columnType={type} {...rowsProps} />
 
-    case 'currency':
+    case columnTypes.CURRENCY:
       return (
         <FormFieldControl
           Component={(props: any) => (
@@ -86,20 +87,20 @@ function RowField({type, rowsProps}: RowFieldProps) {
             </Input>
           )}
           type="number"
-          columnType="currency"
+          columnType={type}
           {...rowsProps}
         />
       )
 
-    case 'date':
+    case columnTypes.DATE:
       return <FormFieldControl Component={DateInput} type="date" {...rowsProps} />
 
-    case 'totalNumber': {
-      return <span>{getNumbers(rowsProps.row.info, 'number')}</span>
+    case columnTypes.TOTALNUNMER: {
+      return <span>{getNumbers(rowsProps.row.info, columnTypes.NUMBER)}</span>
     }
 
-    case 'totalCurrency': {
-      return <span>{getCurrency(rowsProps.row.info, 'currency')}</span>
+    case columnTypes.TOTALCURRENCY: {
+      return <span>{getCurrency(rowsProps.row.info, columnTypes.CURRENCY)}</span>
     }
 
     default:

@@ -1,5 +1,5 @@
 import {Button, Dialog, FormFieldControl, TextField} from '@/components'
-import type {SPACES} from '@/constants'
+import {columnTypes, type SPACES} from '@/constants'
 import {useColumnsStore, useColumnsForm, useColumnsSWR} from '@/hooks'
 import {
   IconCalendarEvent,
@@ -14,15 +14,15 @@ type AddColumnDialogProps = {space: SPACES}
 
 const Icon = ({type}: {type: string}) => {
   switch (type) {
-    case 'date':
+    case columnTypes.DATE:
       return <IconCalendarEvent size={14} />
-    case 'number':
+    case columnTypes.NUMBER:
       return <Icon123 size={18} />
-    case 'totalNumber':
+    case columnTypes.TOTALNUNMER:
       return <Icon123 size={18} />
-    case 'currency':
+    case columnTypes.CURRENCY:
       return <IconCurrencyDollar size={14} />
-    case 'totalCurrency':
+    case columnTypes.TOTALCURRENCY:
       return <IconCurrencyDollar size={14} />
     default:
       return null

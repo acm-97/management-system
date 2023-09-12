@@ -1,3 +1,5 @@
+import {columnTypes} from '@/constants'
+
 export const getNumbers = (info: any[], columnType: string) => {
   const numbers: any[] = []
   info.forEach(item => {
@@ -18,10 +20,10 @@ export const getCurrency = (info: any[], columnType: string) => {
   info.forEach(item => {
     Object.keys(item).forEach(key => {
       const parsedKey = key.split('_')[0]
-      if (parsedKey === 'number') {
+      if (parsedKey === columnTypes.NUMBER) {
         numbers.push(Number(item[key]))
       }
-      if (parsedKey === 'currency') {
+      if (parsedKey === columnTypes.CURRENCY) {
         currencies.push(Number(item[key]))
       }
     })
