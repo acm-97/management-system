@@ -3,13 +3,25 @@ import {client, errorProps} from '@/utils'
 import {toast} from 'react-toastify'
 import useSWR from 'swr'
 import useSWRMutation from 'swr/mutation'
+import {create} from 'zustand'
+
+type Store = {
+  query: string
+  updateQuery: (query: string) => void
+}
+
+export const useQueryParamsStore = create<Store>()(set => ({
+  query: '?populate[info][populate]=*&sort=createdAt:desc&pagination[pageSize]=10',
+  updateQuery: (query: string) => set(state => ({query: `${state.query}${query}`})),
+}))
 
 export default function useInvestsSWR() {
+  const query = useQueryParamsStore(state => state.query)
   const {
     data: invests,
     isLoading: isFetchingInvests,
     mutate: refreshInvests,
-  } = useSWR('/invests?populate[info][populate]=*&sort=createdAt:desc', client.get, swrConfig)
+  } = useSWR(`/invests${query}`, client.get, swrConfig)
 
   const {trigger: createInvest, isMutating: isCreatingInvest} = useSWRMutation(
     '/invests',

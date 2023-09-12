@@ -9,6 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
+  Pagination,
 } from '@/components'
 import {useFieldArray} from 'react-hook-form'
 import {useInvestsSWR} from '../hooks'
@@ -82,6 +83,11 @@ function InvestTable() {
         rows={fields}
         columns={columns?.data}
         rowsProps={{control, handleSubmit, updateRow: updateInvest, form}}
+      />
+      <Pagination
+        page={invests?.meta?.pagination?.page}
+        pageSize={invests?.meta?.pagination?.pageSize}
+        total={invests?.meta?.pagination?.total}
       />
     </div>
   )

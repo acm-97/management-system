@@ -1,4 +1,5 @@
 export {default as Table} from './Table'
+export {default as Pagination} from './Table/Pagination'
 export {default as Button} from './Button'
 export {default as Dialog} from './Dialog'
 export {default as Header} from './Header.astro'
