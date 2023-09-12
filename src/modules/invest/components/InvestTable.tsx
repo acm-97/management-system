@@ -1,4 +1,4 @@
-import React, {memo, useEffect} from 'react'
+import React, {memo, useEffect, useCallback} from 'react'
 import {useColumnsStore, useColumnsSWR, useRowForm, useRowsStore} from '@/hooks'
 import {
   AddColumnDialog,
@@ -42,6 +42,31 @@ function InvestTable() {
     control,
   })
 
+  const handleKeyPress = useCallback((event: any) => {
+    event.preventDefault()
+    if (event.ctrlKey === true) {
+      if (event.key === 'z') {
+        openDialog()
+      }
+      if (event.key === 'x') {
+        createInvest({payload: {info: []}})
+      }
+      if (event.key === 'd') {
+        selectedRows.length > 0 && onDeleteInvests()
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    // attach the event listener
+    window.addEventListener('keydown', handleKeyPress)
+
+    // remove the event listener
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress)
+    }
+  }, [handleKeyPress])
+
   return (
     <div className="flex w-full flex-col gap-6">
       <div className="flex justify-end ">
@@ -55,21 +80,15 @@ function InvestTable() {
           <DropdownMenuContent className="border-transparent bg-primary-dark shadow-sm shadow-white">
             <DropdownMenuItem onClick={openDialog}>
               Añadir Columnas
-              <DropdownMenuShortcut>
-                <IconColumns className="h-4 w-4" />
-              </DropdownMenuShortcut>
+              <DropdownMenuShortcut>crtl+Z</DropdownMenuShortcut>
             </DropdownMenuItem>
             <DropdownMenuItem onClick={async () => await createInvest({payload: {info: []}})}>
               Añadir Filas
-              <DropdownMenuShortcut>
-                <IconMenu2 className="h-4 w-4" />
-              </DropdownMenuShortcut>
+              <DropdownMenuShortcut>crtl+X</DropdownMenuShortcut>
             </DropdownMenuItem>
             <DropdownMenuItem onClick={onDeleteInvests} disabled={selectedRows.length === 0}>
               Eliminar Filas
-              <DropdownMenuShortcut>
-                <IconTrashXFilled className="h-4 w-4" />
-              </DropdownMenuShortcut>
+              <DropdownMenuShortcut>crtl+D</DropdownMenuShortcut>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -87,6 +106,7 @@ function InvestTable() {
       <Pagination
         page={invests?.meta?.pagination?.page}
         pageSize={invests?.meta?.pagination?.pageSize}
+        pageCount={invests?.meta?.pagination?.pageCount}
         total={invests?.meta?.pagination?.total}
       />
     </div>
