@@ -3,12 +3,12 @@ import {Header} from '@/components'
 import {ViewTransitions} from 'astro:transitions'
 import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import {SWRConfig} from 'swr'
 interface Props {
   title: string
 }
 
 const {title} = Astro.props
+const {slug} = Astro.params
 ---
 
 <!doctype html>
@@ -23,7 +23,7 @@ const {title} = Astro.props
     <ViewTransitions />
   </head>
   <body class="h-[100lvh]">
-    <Header />
+    {slug && <Header />}
     <main class="flex flex-col justify-center gap-24 px-16 pt-16">
       <div class="m-auto w-full">
         <slot />

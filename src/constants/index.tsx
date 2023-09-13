@@ -1,8 +1,3 @@
-export enum SPACES {
-  SALES = 'sales',
-  INVEST = 'invests',
-}
-
 export enum columnTypes {
   NUMBER = 'number',
   CURRENCY = 'currency',

@@ -7,16 +7,14 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components'
-import {useColumnsStore, useColumnsSWR} from '@/hooks'
+import {useColumnsStore, useColumnsSWR, useRowsSWR} from '@/hooks'
 import {IconDotsVertical, IconPencil, IconTrashXFilled} from '@tabler/icons-react'
-import {useSalesSWR} from '@/modules/sales/hooks'
-import type {SPACES} from '@/constants'
 
-type DropdownProps = {column: any; space: SPACES}
+type DropdownProps = {column: any; space: string}
 
 function ColumnMenu({column, space}: DropdownProps) {
   const {deleteColumn} = useColumnsSWR(space)
-  const {sales, updateSale} = useSalesSWR()
+  const {rows, updateRow} = useRowsSWR(space)
   const openDialog = useColumnsStore(state => state.openDialog)
   const setColumn = useColumnsStore(state => state.setColumn)
 
@@ -26,17 +24,17 @@ function ColumnMenu({column, space}: DropdownProps) {
   }
   const onDelete = () => {
     let info: any[] | null = null
-    sales?.data?.forEach((sale: any) => {
+    rows?.data?.forEach((row: any) => {
       if (column?.subHeaders?.length > 0) {
-        info = sale?.info?.filter(
+        info = row?.info?.filter(
           (item: any) => !column?.subHeaders?.some((subCol: any) => !!item[subCol?.fieldId]),
         )
       } else {
-        info = sale?.info?.filter((item: any) => !item[column?.fieldId])
+        info = row?.info?.filter((item: any) => !item[column?.fieldId])
       }
 
-      if (info && info.length !== sale?.info?.length) {
-        updateSale({id: sale?.id, payload: {info}})
+      if (info && info.length !== row?.info?.length) {
+        updateRow({id: row?.id, payload: {info}})
       }
     })
     deleteColumn({id: column?.id})

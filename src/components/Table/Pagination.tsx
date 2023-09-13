@@ -1,4 +1,4 @@
-import {useQueryParamsStore} from '@/modules/invest/hooks/useInvestsSWR'
+import {useQueryParamsStore} from '@/hooks/useRowsSWR'
 import React, {memo, useState} from 'react'
 
 type PaginationProps = {page: number; pageSize: number; pageCount: number; total: number}

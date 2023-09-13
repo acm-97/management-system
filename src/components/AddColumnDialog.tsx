@@ -1,5 +1,5 @@
 import {Button, Dialog, FormFieldControl, TextField} from '@/components'
-import {columnTypes, type SPACES} from '@/constants'
+import {columnTypes} from '@/constants'
 import {useColumnsStore, useColumnsForm, useColumnsSWR} from '@/hooks'
 import {
   IconCalendarEvent,
@@ -10,7 +10,7 @@ import {
 import React, {memo} from 'react'
 import {useFieldArray} from 'react-hook-form'
 
-type AddColumnDialogProps = {space: SPACES}
+type AddColumnDialogProps = {space: string}
 
 const Icon = ({type}: {type: string}) => {
   switch (type) {

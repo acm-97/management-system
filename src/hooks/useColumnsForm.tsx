@@ -3,7 +3,6 @@ import {z} from 'zod'
 import {zodResolver} from '@hookform/resolvers/zod'
 import {useColumnsStore} from './useColumnsStore'
 import useColumnsSWR from './useColumnsSWR'
-import {type SPACES} from '@/constants'
 import {useEffect} from 'react'
 
 const FormSchema = z.object({
@@ -24,7 +23,7 @@ const FormSchema = z.object({
 
 export type ColumnsFormProps = z.infer<typeof FormSchema>
 
-export default function useColumnsForm(space: SPACES) {
+export default function useColumnsForm(space: string) {
   const {createColumn, updateColumn} = useColumnsSWR(space)
   const column = useColumnsStore(state => state.column)
   const setColumn = useColumnsStore(state => state.setColumn)

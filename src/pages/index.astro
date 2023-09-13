@@ -1,77 +1,94 @@
-<style type="text/css">
-  table {
-    width: 100%;
-    border: 1px solid black;
-  }
+---
+import {AddSpace} from '@/components'
+import {buttonVariants} from '@/components/Button'
+import Layout from '@/layouts/Layout.astro'
+import {client, cn} from '@/utils'
+import {
+  IconTableOptions,
+  IconUserShield,
+  IconTableFilled,
+  IconHierarchy,
+  IconPlanet,
+} from '@tabler/icons-react'
 
-  table td,
-  table th {
-    border: 1px solid black;
-  }
+const spaces = await client.get('spaces')
+---
 
-  table .FirstColumn {
-    slate-900-color: #9999dd;
-  }
+<Layout title="Home">
+  <section class="mx-auto flex w-full flex-col justify-start gap-20 text-center md:w-3/4 lg:w-2/4">
+    <h1
+      class="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% bg-clip-text py-2 text-center text-6xl leading-[4.5rem] text-transparent"
+    >
+      Simple Sistema de Gestión para Pequeños Negocios
+    </h1>
 
-  table thead tr {
-    slate-900-color: blue;
-  }
+    <AddSpace client:load />
 
-  table tbody.secondHeader tr {
-    slate-900-color: skyblue;
-  }
-</style>
-<table cellpadding="0" cellspacing="0">
-  <colgroup>
-    <col class="FirstColumn" />
-  </colgroup>
-  <thead>
-    <tr>
-      <th colspan="2">Object</th>
-      <th colspan="2">Openings</th>
-      <th colspan="3">Internal Dimensions</th>
-      <th colspan="3">Weight</th>
-      <th>Volume</th>
-    </tr>
-  </thead>
-  <tbody class="secondHeader">
-    <tr>
-      <th>Type</th>
-      <th>Size</th>
-      <th>Width</th>
-      <th>Height</th>
-      <th>Length</th>
-      <th>Width</th>
-      <th>Height</th>
-      <th>Max</th>
-      <th>Min</th>
-      <th>Tare</th>
-      <th>Capacity</th>
-    </tr>
-  </tbody>
-  <tbody>
-    <tr>
-      <td>20 std</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>40 std</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr></tbody
-  >
-</table>
+    <div class="border-2 border-slate-800 p-8">
+      <div class="grid grid-cols-3 gap-4">
+        {
+          spaces.data.map((space: any) => (
+            <a
+              class={cn(buttonVariants({variant: 'text'}), 'hover:underline underline-offset-4')}
+              href={`/${space.title.replace(' ', '-').toLowerCase()}`}
+            >
+              <IconPlanet size={16} /> {space.title}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto mt-20 py-8 text-center md:w-3/4 lg:w-3/5">
+    <div class="grid grid-cols-2 gap-10">
+      <div
+        class="flex h-56 scale-95 flex-col items-center justify-center gap-5 p-5 shadow-[rgba(0,0,0,0.35)_0px_5px_5px] transition-all duration-200 ease-in-out hover:scale-105"
+      >
+        <IconHierarchy size={90} />
+        <span
+          class="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% bg-clip-text
+         text-xl font-semibold text-transparent"
+          >Flujo de trabajo separado por espacios
+        </span>
+      </div>
+      <div
+        class="flex h-56 scale-95 flex-col items-center justify-center gap-5 p-5 shadow-[rgba(0,0,0,0.35)_0px_5px_5px] transition-all duration-200 ease-in-out hover:scale-105"
+      >
+        <IconTableFilled size={90} />
+        <span
+          class="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% bg-clip-text
+     text-xl font-semibold text-transparent"
+        >
+          Tablas dinámicas
+        </span>
+      </div>
+      <div
+        class="relative flex h-56 scale-95 flex-col items-center justify-center gap-5 p-5 shadow-[rgba(0,0,0,0.35)_0px_5px_5px] transition-all duration-200 ease-in-out hover:scale-105"
+      >
+        <IconUserShield size={90} />
+        <span
+          class="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% bg-clip-text
+     text-xl font-semibold text-transparent"
+          >Autenticación de usuario
+        </span>
+        <span class="absolute right-2 top-2 text-xs font-semibold text-orange-500"
+          >proximamente</span
+        >
+      </div>
+      <div
+        class="relative flex h-56 scale-95 flex-col items-center justify-center gap-5 p-5 shadow-[rgba(0,0,0,0.35)_0px_5px_5px] transition-all duration-200 ease-in-out hover:scale-105"
+      >
+        <IconTableOptions size={90} />
+        <span
+          class="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% bg-clip-text
+     text-xl font-semibold text-transparent"
+          >Nuevas operaciones
+        </span>
+        <span class="absolute right-2 top-2 text-xs font-semibold text-orange-500"
+          >proximamente</span
+        >
+      </div>
+    </div>
+  </section>
+</Layout>

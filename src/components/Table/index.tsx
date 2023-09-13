@@ -7,14 +7,13 @@ import {cn} from '@/utils'
 import {useColumnsSWR, useRowsStore} from '@/hooks'
 import Skeleton from './Skeleton'
 import {IconTableOff} from '@tabler/icons-react'
-import type {SPACES} from '@/constants'
 
 type TableProps = {
   columns: Array<Record<string, any>>
   rows: Array<Record<string, any>>
   rowsProps: Record<string, any>
   isLoading: boolean
-  space: SPACES
+  space: string
 }
 
 function Table({rows, columns, rowsProps, isLoading, space}: TableProps) {

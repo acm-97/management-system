@@ -1,5 +1,5 @@
 import React, {memo, useEffect, useCallback} from 'react'
-import {useColumnsStore, useColumnsSWR, useRowForm, useRowsStore} from '@/hooks'
+import {useColumnsStore, useColumnsSWR, useRowForm, useRowsStore, useRowsSWR} from '@/hooks'
 import {
   AddColumnDialog,
   Button,
@@ -12,29 +12,26 @@ import {
   Pagination,
 } from '@/components'
 import {useFieldArray} from 'react-hook-form'
-import {useInvestsSWR} from '../hooks'
 import {IconColumns, IconMenu2, IconTableOptions, IconTrashXFilled} from '@tabler/icons-react'
 import {buttonVariants} from '@/components/Button'
 import {cn} from '@/utils'
-import {SPACES} from '@/constants'
 
-function InvestTable() {
-  const {invests, updateInvest, createInvest, deleteInvest, refreshInvests, isFetchingInvests} =
-    useInvestsSWR()
-  const {control, handleSubmit, ...form} = useRowForm(invests?.data)
-  const {columns, isFetchingColumns} = useColumnsSWR(SPACES.INVEST)
+function SpaceTable({space}: {space: string}) {
+  const {rows, updateRow, createRow, deleteRow, refreshRows, isFetchingRows} = useRowsSWR(space)
+  const {control, handleSubmit, ...form} = useRowForm(rows?.data)
+  const {columns, isFetchingColumns} = useColumnsSWR(space)
   const openDialog = useColumnsStore(state => state.openDialog)
   const selectedRows = useRowsStore(state => state.selectedRows)
 
   useEffect(() => {
     if (columns?.data?.length === 0) {
-      invests?.data?.forEach(async (invest: any) => await deleteInvest({id: invest?.id}))
+      rows?.data?.forEach(async (row: any) => await deleteRow({id: row?.id}))
     }
   }, [columns?.data?.length])
 
-  const onDeleteInvests = () => {
-    selectedRows.forEach(async id => await deleteInvest({id}))
-    refreshInvests()
+  const onDeleteRows = () => {
+    selectedRows.forEach(async id => await deleteRow({id}))
+    refreshRows()
   }
 
   const {fields} = useFieldArray({
@@ -49,10 +46,10 @@ function InvestTable() {
         openDialog()
       }
       if (event.key === 'x') {
-        createInvest({payload: {info: []}})
+        createRow({payload: {info: []}})
       }
       if (event.key === 'd') {
-        selectedRows.length > 0 && onDeleteInvests()
+        selectedRows.length > 0 && onDeleteRows()
       }
     }
   }, [])
@@ -82,11 +79,11 @@ function InvestTable() {
               Añadir Columnas
               <DropdownMenuShortcut>crtl+Z</DropdownMenuShortcut>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={async () => await createInvest({payload: {info: []}})}>
+            <DropdownMenuItem onClick={async () => await createRow({payload: {info: []}})}>
               Añadir Filas
               <DropdownMenuShortcut>crtl+X</DropdownMenuShortcut>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={onDeleteInvests} disabled={selectedRows.length === 0}>
+            <DropdownMenuItem onClick={onDeleteRows} disabled={selectedRows.length === 0}>
               Eliminar Filas
               <DropdownMenuShortcut>crtl+D</DropdownMenuShortcut>
             </DropdownMenuItem>
@@ -94,23 +91,23 @@ function InvestTable() {
         </DropdownMenu>
       </div>
 
-      <AddColumnDialog space={SPACES.INVEST} />
+      <AddColumnDialog space={space} />
 
       <Table
-        isLoading={isFetchingInvests || isFetchingColumns}
-        space={SPACES.INVEST}
+        isLoading={isFetchingRows || isFetchingColumns}
+        space={space}
         rows={fields}
         columns={columns?.data}
-        rowsProps={{control, handleSubmit, updateRow: updateInvest, form}}
+        rowsProps={{control, handleSubmit, updateRow, form}}
       />
       <Pagination
-        page={invests?.meta?.pagination?.page}
-        pageSize={invests?.meta?.pagination?.pageSize}
-        pageCount={invests?.meta?.pagination?.pageCount}
-        total={invests?.meta?.pagination?.total}
+        page={rows?.meta?.pagination?.page}
+        pageSize={rows?.meta?.pagination?.pageSize}
+        pageCount={rows?.meta?.pagination?.pageCount}
+        total={rows?.meta?.pagination?.total}
       />
     </div>
   )
 }
 
-export default memo(InvestTable)
+export default memo(SpaceTable)

@@ -1,15 +1,13 @@
 import {useEffect} from 'react'
-import {SPACES, swrConfig} from '@/constants'
+import {swrConfig} from '@/constants'
 import {client, errorProps} from '@/utils'
 import useSWR from 'swr'
 import {toast} from 'react-toastify'
 import useSWRMutation from 'swr/mutation'
-import {useSalesSWR} from '@/modules/sales/hooks'
-import {useInvestsSWR} from '@/modules/invest/hooks'
+import useRowsSWR from './useRowsSWR'
 
 export default function useColumnsSWR(space: string) {
-  const {refreshSales} = useSalesSWR()
-  const {refreshInvests} = useInvestsSWR()
+  const {refreshRows} = useRowsSWR(space)
 
   const {
     data: subHeaders,
@@ -43,8 +41,7 @@ export default function useColumnsSWR(space: string) {
     {
       onSuccess: () => {
         refreshColumns()
-        space === SPACES.SALES && refreshSales()
-        space === SPACES.INVEST && refreshInvests()
+        refreshRows()
       },
       onError: error => toast.error(error, errorProps),
     },
@@ -56,8 +53,7 @@ export default function useColumnsSWR(space: string) {
     {
       onSuccess: () => {
         refreshColumns()
-        space === SPACES.SALES && refreshSales()
-        space === SPACES.INVEST && refreshInvests()
+        refreshRows()
       },
       onError: error => toast.error(error, errorProps),
     },
@@ -69,8 +65,7 @@ export default function useColumnsSWR(space: string) {
     {
       onSuccess: () => {
         refreshColumns()
-        space === SPACES.SALES && refreshSales()
-        space === SPACES.INVEST && refreshInvests()
+        refreshRows()
       },
       onError: error => toast.error(error, errorProps),
     },
