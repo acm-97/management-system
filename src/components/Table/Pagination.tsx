@@ -41,9 +41,9 @@ function Pagination({page, pageSize, pageCount, total}: PaginationProps) {
               d="M13 5H1m0 0 4 4M1 5l4-4"
             />
           </svg>
-          Anterior
+          Ant
         </button>
-        <div className="flex h-8 items-center border  border-slate-700 bg-slate-900 px-3.5">
+        <div className="flex h-8 items-center border  border-slate-700 bg-slate-900 px-2 sm:px-3.5">
           {page} / {pageCount}
         </div>
         <button
@@ -51,7 +51,7 @@ function Pagination({page, pageSize, pageCount, total}: PaginationProps) {
           onClick={onNext}
           className="flex h-8 items-center justify-center rounded-r border-0 bg-primary-main  px-3.5  hover:bg-primary-dark disabled:opacity-50 hover:disabled:bg-primary-main hover:disabled:opacity-50"
         >
-          Siguiente
+          Sig
           <svg
             className="ml-2 h-3.5 w-3.5"
             aria-hidden="true"

@@ -12,7 +12,7 @@ const {slug} = Astro.params
 ---
 
 <!doctype html>
-<html lang="es" class="[font-family: Papyrus, fantasy] bg-background text-slate-300">
+<html lang="es" class="bg-background text-slate-300">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Gestion de ventas" />
@@ -24,7 +24,7 @@ const {slug} = Astro.params
   </head>
   <body class="h-[100lvh]">
     {slug && <Header />}
-    <main class="flex flex-col justify-center gap-24 px-16 pt-16">
+    <main class="flex flex-col justify-center gap-24 px-8 sm:px-16 pt-16">
       <div class="m-auto w-full">
         <slot />
       </div>
@@ -44,8 +44,32 @@ const {slug} = Astro.params
 
     <style is:global>
       :root {
-        font-family: 'Comic Sans MS', cursive;
+        font-family: Comic Sans MS, Comic Sans, cursive;
         color-sheme: dark white;
+
+        @media screen and (max-width: 768px) { 
+          font-family: Andale Mono, monospace;
+        }
+
+        ::-webkit-scrollbar {
+          width: 15px;
+          height: 15px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+          background-color: gray;
+          border: 3px solid #1e293b;
+          border-radius: 10px;
+          -webkit-border-radius: 10px;
+          -moz-border-radius: 10px;
+          -ms-border-radius: 10px;
+          -o-border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+          background-color: #1e293b;
+        }
+
       }
     </style>
   </body>

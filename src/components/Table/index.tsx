@@ -63,7 +63,7 @@ function Table({rows, columns, rowsProps, isLoading, space}: TableProps) {
           <thead>
             <tr className="bg-sky-950">
               {columns?.length > 0 && (
-                <th className="border border-solid border-slate-700">
+                <th className="border border-solid border-slate-700 px-2">
                   <Checkbox
                     className={cn('', {
                       'border-orange-400 text-orange-400': allSelected,
