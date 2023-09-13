@@ -1,4 +1,3 @@
-'use client'
 import React, {memo} from 'react'
 import {Controller} from 'react-hook-form'
 
