@@ -12,6 +12,7 @@
     "lint:fix": "pnpm prettier --write  \"src/**/*.{astro}\" && eslint src/**/*.{ts,tsx,astro} --fix"
   },
   "dependencies": {
+    "@astrojs/node": "^6.0.0",
     "@astrojs/react": "^3.0.0",
     "@astrojs/tailwind": "^5.0.0",
     "@hookform/resolvers": "^3.3.1",
