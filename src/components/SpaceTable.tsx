@@ -39,20 +39,25 @@ function SpaceTable({space}: {space: string}) {
     control,
   })
 
-  const handleKeyPress = useCallback((event: any) => {
-    event.preventDefault()
-    if (event.ctrlKey === true) {
-      if (event.key === 'z') {
-        openDialog()
+  const handleKeyPress = useCallback(
+    (event: any) => {
+      if (event.ctrlKey === true) {
+        event.preventDefault()
+        if (event.key === 'z') {
+          openDialog()
+        }
+        if (event.key === 'x') {
+          event.preventDefault()
+          createRow({payload: {space, info: []}})
+        }
+        if (event.key === 'd') {
+          event.preventDefault()
+          selectedRows.length > 0 && onDeleteRows()
+        }
       }
-      if (event.key === 'x') {
-        createRow({payload: {info: []}})
-      }
-      if (event.key === 'd') {
-        selectedRows.length > 0 && onDeleteRows()
-      }
-    }
-  }, [])
+    },
+    [selectedRows],
+  )
 
   useEffect(() => {
     // attach the event listener

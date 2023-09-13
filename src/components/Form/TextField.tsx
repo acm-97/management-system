@@ -50,22 +50,22 @@ export interface InputProps
 }
 
 const TextField = React.forwardRef<HTMLInputElement, InputProps>(
-  ({className: {wrapper, input, label: classLabel}, error, helperText, label, ...props}, ref) => {
+  ({className, error, helperText, label, ...props}, ref) => {
     return props?.type === 'color' ? (
       <input
         className="h-8 w-8 rounded-md border border-solid bg-transparent p-0.5 hover:cursor-pointer"
         {...props}
       />
     ) : (
-      <div className={cn('relative h-10 w-full min-w-[200px]', wrapper, {'mb-2.5': error})}>
+      <div className={cn('relative h-10 w-full min-w-[200px]', className?.wrapper, {'mb-2.5': error})}>
         <input
-          className={cn(inputVariants({error}), input)}
+          className={cn(inputVariants({error}), className?.input)}
           ref={ref}
           {...props}
           placeholder=" "
           autoComplete="off"
         />
-        {label && <label className={cn(labelVariants({error}), classLabel)}>{label}</label>}
+        {label && <label className={cn(labelVariants({error}), className?.classLabel)}>{label}</label>}
         {error && (
           <span className="absolute -bottom-6 left-3 text-sm text-pink-500">{helperText}</span>
         )}

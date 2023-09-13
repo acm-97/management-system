@@ -11,7 +11,7 @@ type Store = {
 }
 
 export const useQueryParamsStore = create<Store>()(set => ({
-  query: '?populate[info][populate]=*&sort=createdAt:desc&pagination[pageSize]=10',
+  query: '&populate[info][populate]=*&sort=createdAt:desc&pagination[pageSize]=12',
   updateQuery: (query: string) => set(state => ({query: `${state.query}${query}`})),
 }))
 
@@ -21,7 +21,7 @@ export default function useRowsSWR(space: string) {
     data: rows,
     isLoading: isFetchingRows,
     mutate: refreshRows,
-  } = useSWR(`/${space}${query}`, client.get, swrConfig)
+  } = useSWR(`/rows?filters[space][$eq]=${space}${query}`, client.get, swrConfig)
 
   const {trigger: createRow, isMutating: isCreatingRow} = useSWRMutation('/rows', client.post, {
     onSuccess: async () => await refreshRows(),
