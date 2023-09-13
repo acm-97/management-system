@@ -1,5 +1,5 @@
 import React, {memo} from 'react'
-import {FormFieldControl, TextField} from './Form'
+import {FormFieldControl, TextField} from '@/components'
 import * as z from 'zod'
 import Button from './Button'
 import {useForm, type SubmitHandler} from 'react-hook-form'
