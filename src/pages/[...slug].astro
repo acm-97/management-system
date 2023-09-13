@@ -12,7 +12,7 @@ const space = spaces?.data?.find((space: any) => space.title.replace(' ', '-').t
 
 if (!space) return Astro.redirect('/404')
 
-const {title} = space
+const {title, id} = space
 ---
 
 <Layout title={space?.title || ''}>
@@ -23,6 +23,6 @@ const {title} = space
     >
       Control de Inversiones
     </h2> -->
-  <SpaceTable space={title || ''} client:load />
+  <SpaceTable space={title || ''} spaceId={id} client:load />
   <!-- </div> -->
 </Layout>

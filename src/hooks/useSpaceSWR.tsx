@@ -36,7 +36,10 @@ export default function useSpacesSWR() {
     '/spaces',
     client.delete,
     {
-      onSuccess: async () => await refreshSpaces(),
+      onSuccess: async () => {
+        await refreshSpaces()
+        window.location.href = '/'
+      },
       onError: error => toast.error(error, errorProps),
     },
   )

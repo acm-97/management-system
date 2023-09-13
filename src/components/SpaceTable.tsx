@@ -15,11 +15,13 @@ import {useFieldArray} from 'react-hook-form'
 import {IconColumns, IconMenu2, IconTableOptions, IconTrashXFilled} from '@tabler/icons-react'
 import {buttonVariants} from '@/components/Button'
 import {cn} from '@/utils'
+import useSpacesSWR from '@/hooks/useSpaceSWR'
 
-function SpaceTable({space}: {space: string}) {
+function SpaceTable({space, spaceId}: {space: string, spaceId:number}) {
   const {rows, updateRow, createRow, deleteRow, refreshRows, isFetchingRows} = useRowsSWR(space)
   const {control, handleSubmit, ...form} = useRowForm(rows?.data)
   const {columns, isFetchingColumns} = useColumnsSWR(space)
+  const {deleteSpace} = useSpacesSWR()
   const openDialog = useColumnsStore(state => state.openDialog)
   const selectedRows = useRowsStore(state => state.selectedRows)
 
@@ -32,6 +34,10 @@ function SpaceTable({space}: {space: string}) {
   const onDeleteRows = () => {
     selectedRows.forEach(async id => await deleteRow({id}))
     refreshRows()
+  }
+
+  const onDeleteSpace = () => {
+    deleteSpace({ id: spaceId })
   }
 
   const {fields} = useFieldArray({
@@ -91,6 +97,9 @@ function SpaceTable({space}: {space: string}) {
             <DropdownMenuItem onClick={onDeleteRows} disabled={selectedRows.length === 0}>
               Eliminar Filas
               <DropdownMenuShortcut>crtl+D</DropdownMenuShortcut>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={onDeleteSpace}>
+              Eliminar Espacio
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

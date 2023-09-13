@@ -48,13 +48,13 @@ function Table({rows, columns, rowsProps, isLoading, space}: TableProps) {
   return (
     <div
       className={
-        'min-h-[55dvh] w-full overflow-hidden overflow-x-auto rounded-lg border border-slate-700 shadow-sm shadow-white'
+        'min-h-[55dvh] w-full h-full overflow-hidden overflow-x-auto rounded-lg border border-slate-700 shadow-sm shadow-white'
       }
     >
       {isLoading ? (
         <Skeleton />
       ) : columns?.length === 0 ? (
-        <div className="flex h-72 flex-col items-center justify-center gap-2">
+        <div className="flex h-[55dvh] flex-col items-center justify-center gap-2">
           <IconTableOff size={80} className="text-slate-500" />
           <p className="uppercase text-slate-500">Cree sus primeros datos</p>
         </div>
