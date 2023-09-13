@@ -65,7 +65,7 @@ const TextField = React.forwardRef<HTMLInputElement, InputProps>(
           placeholder=" "
           autoComplete="off"
         />
-        {label && <label className={cn(labelVariants({error}), className?.classLabel)}>{label}</label>}
+        {label && <label className={cn(labelVariants({error}), className?.label)}>{label}</label>}
         {error && (
           <span className="absolute -bottom-6 left-3 text-sm text-pink-500">{helperText}</span>
         )}
