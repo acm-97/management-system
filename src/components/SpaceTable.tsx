@@ -90,7 +90,7 @@ function SpaceTable({space, spaceId}: {space: string, spaceId:number}) {
               Añadir Columnas
               <DropdownMenuShortcut>crtl+Z</DropdownMenuShortcut>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={async () => await createRow({payload: {info: []}})}>
+            <DropdownMenuItem onClick={async () => await createRow({payload: {space, info: []}})}>
               Añadir Filas
               <DropdownMenuShortcut>crtl+X</DropdownMenuShortcut>
             </DropdownMenuItem>

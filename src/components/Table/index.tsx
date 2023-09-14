@@ -94,6 +94,13 @@ function Table({rows, columns, rowsProps, isLoading, space}: TableProps) {
                 <th className="border border-solid border-slate-700"></th>
                 {columns?.map(
                   (col: any) =>
+                    col?.subHeaders?.length === 0 ? (
+                      <th
+                        key={crypto.randomUUID()}
+                        className="border border-solid border-slate-800 p-2.5"
+                      />
+                    )
+                      :
                     col?.subHeaders?.map((subCol: any) => (
                       <th
                         key={subCol?.fieldId}
