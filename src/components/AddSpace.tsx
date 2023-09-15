@@ -10,7 +10,7 @@ const SpaceSchema = z.object({
     .string()
     .min(1, 'Debe contener al menos dos letras.')
     .refine(
-      value => /^[a-zA-Z]+[-'s]?[a-zA-Z ]+$/.test(value),
+      value => /^[a-zA-Z]+$/.test(value),
       'El nombre solo puede contener letras.',
     ),
 })
