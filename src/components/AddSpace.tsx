@@ -29,7 +29,7 @@ function AddSpace() {
   }
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center w-full sm:w-4/6">
       <FormFieldControl
         control={control}
         Component={TextField}

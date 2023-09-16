@@ -14,13 +14,13 @@ function Pagination({page, pageSize, pageCount, total}: PaginationProps) {
   }
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center text-center">
       <span className="text-sm text-gray-400">
         Mostrando de <span className="font-semibold text-white">1 </span> a
         <span className="font-semibold text-white"> {pageSize} </span> por página de un total de
         <span className="font-semibold text-white"> {total} </span> elementos
       </span>
-      <div className="xs:mt-0 mt-2 inline-flex">
+      <div className="mt-0 inline-flex sm:mt-2">
         <button
           disabled={page <= 1}
           onClick={onPrev}
