@@ -48,7 +48,7 @@ function Table({rows, columns, rowsProps, isLoading, space}: TableProps) {
   return (
     <div
       className={
-        'min-h-[55dvh] w-full h-full overflow-hidden overflow-x-auto rounded-lg border border-slate-700 shadow-sm shadow-white'
+        'h-full min-h-[55dvh] w-full overflow-hidden overflow-x-auto rounded-lg border border-slate-700 shadow-sm shadow-white'
       }
     >
       {isLoading ? (
@@ -92,15 +92,13 @@ function Table({rows, columns, rowsProps, isLoading, space}: TableProps) {
             <tbody>
               <tr className="bg-sky-950">
                 <th className="border border-solid border-slate-700"></th>
-                {columns?.map(
-                  (col: any) =>
-                    col?.subHeaders?.length === 0 ? (
-                      <th
-                        key={crypto.randomUUID()}
-                        className="border border-solid border-slate-800 p-2.5"
-                      />
-                    )
-                      :
+                {columns?.map((col: any) =>
+                  col?.subHeaders?.length === 0 ? (
+                    <th
+                      key={crypto.randomUUID()}
+                      className="border border-solid border-slate-800 p-2.5"
+                    />
+                  ) : (
                     col?.subHeaders?.map((subCol: any) => (
                       <th
                         key={subCol?.fieldId}
@@ -109,7 +107,8 @@ function Table({rows, columns, rowsProps, isLoading, space}: TableProps) {
                       >
                         {subCol?.name}
                       </th>
-                    )),
+                    ))
+                  ),
                 )}
               </tr>
             </tbody>

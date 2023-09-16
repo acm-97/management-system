@@ -9,7 +9,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "lint": "pnpm eslint src/**/*.{ts,tsx,astro}",
-    "lint:fix": "pnpm prettier --write  \"src/**/*.{astro}\" && eslint src/**/*.{ts,tsx,astro} --fix"
+    "lint:fix": "pnpm prettier --write  \"src/**/*.astro\" && eslint src/**/*.{ts,tsx,astro} --fix"
   },
   "dependencies": {
     "@astrojs/node": "^6.0.0",

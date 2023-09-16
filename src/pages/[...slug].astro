@@ -7,11 +7,17 @@ import {IconTableFilled} from '@tabler/icons-react'
 export const prerender = false
 
 const spaces = await client.get('spaces')
-const menu = spaces?.data?.map((space: any) => ({label: space?.title, href: `/${space?.title?.replace(' ', '-')?.toLowerCase()}`, Icon: IconTableFilled}))
+const menu = spaces?.data?.map((space: any) => ({
+  label: space?.title,
+  href: `/${space?.title?.replace(' ', '-')?.toLowerCase()}`,
+  Icon: IconTableFilled,
+}))
 
 const {slug} = Astro.params
 
-const space = spaces?.data?.find((space: any) => space.title.replace(' ', '-').toLowerCase() === slug)
+const space = spaces?.data?.find(
+  (space: any) => space.title.replace(' ', '-').toLowerCase() === slug,
+)
 
 if (!space) return Astro.redirect('/404')
 
@@ -19,6 +25,6 @@ const {title, id} = space
 ---
 
 <Layout title={space?.title || ''}>
-  <Header menu={menu}/>
+  <Header menu={menu} />
   <SpaceTable space={title || ''} spaceId={id} client:load />
 </Layout>

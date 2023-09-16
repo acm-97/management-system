@@ -17,7 +17,7 @@ import {buttonVariants} from '@/components/Button'
 import {cn} from '@/utils'
 import useSpacesSWR from '@/hooks/useSpaceSWR'
 
-function SpaceTable({space, spaceId}: {space: string, spaceId:number}) {
+function SpaceTable({space, spaceId}: {space: string; spaceId: number}) {
   const {rows, updateRow, createRow, deleteRow, refreshRows, isFetchingRows} = useRowsSWR(space)
   const {control, handleSubmit, ...form} = useRowForm(rows?.data)
   const {columns, isFetchingColumns} = useColumnsSWR(space)
@@ -37,7 +37,7 @@ function SpaceTable({space, spaceId}: {space: string, spaceId:number}) {
   }
 
   const onDeleteSpace = () => {
-    deleteSpace({ id: spaceId })
+    deleteSpace({id: spaceId})
   }
 
   const {fields} = useFieldArray({
@@ -98,9 +98,7 @@ function SpaceTable({space, spaceId}: {space: string, spaceId:number}) {
               Eliminar Filas
               <DropdownMenuShortcut>crtl+D</DropdownMenuShortcut>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={onDeleteSpace}>
-              Eliminar Espacio
-            </DropdownMenuItem>
+            <DropdownMenuItem onClick={onDeleteSpace}>Eliminar Espacio</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

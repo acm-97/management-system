@@ -57,7 +57,9 @@ const TextField = React.forwardRef<HTMLInputElement, InputProps>(
         {...props}
       />
     ) : (
-      <div className={cn('relative h-10 w-full min-w-[200px]', className?.wrapper, {'mb-2.5': error})}>
+      <div
+        className={cn('relative h-10 w-full min-w-[200px]', className?.wrapper, {'mb-2.5': error})}
+      >
         <input
           className={cn(inputVariants({error}), className?.input)}
           ref={ref}

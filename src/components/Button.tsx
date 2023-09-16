@@ -32,12 +32,12 @@ export const buttonVariants = cva(
       {
         variant: ['text'],
         color: ['primary'],
-        className: 'text-primary-light p-0',
+        className: 'p-0 text-primary-light',
       },
       {
         variant: ['text'],
         color: ['error'],
-        className: 'text-error-main p-0',
+        className: 'p-0 text-error-main',
       },
       {
         variant: ['text'],

@@ -9,10 +9,7 @@ const SpaceSchema = z.object({
   title: z
     .string()
     .min(1, 'Debe contener al menos dos letras.')
-    .refine(
-      value => /^[a-zA-Z]+$/.test(value),
-      'El nombre solo puede contener letras.',
-    ),
+    .refine(value => /^[a-zA-Z]+$/.test(value), 'El nombre solo puede contener letras.'),
 })
 
 function AddSpace() {
@@ -37,7 +34,7 @@ function AddSpace() {
         control={control}
         Component={TextField}
         name="title"
-        label={'Space name'}
+        label={'Nombre para el espacio de trabajo'}
         className={{
           wrapper: 'rounded-r-none !border-r-0',
           input: 'rounded-r-none !border-r-0',
