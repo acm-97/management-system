@@ -76,7 +76,7 @@ function SpaceTable({space, spaceId}: {space: string, spaceId:number}) {
   }, [handleKeyPress])
 
   return (
-    <div className="flex w-full flex-col gap-6">
+    <div className="flex w-full flex-col gap-6 pt-4">
       <div className="flex justify-end ">
         <DropdownMenu>
           <DropdownMenuTrigger>

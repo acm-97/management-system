@@ -1,11 +1,14 @@
 ---
 import {client} from '@/utils'
 import Layout from '../layouts/Layout.astro'
-import {SpaceTable} from '@/components'
+import {Header, SpaceTable} from '@/components'
+import {IconTableFilled} from '@tabler/icons-react'
 
 export const prerender = false
 
 const spaces = await client.get('spaces')
+const menu = spaces?.data?.map((space: any) => ({label: space?.title, href: `/${space?.title?.replace(' ', '-')?.toLowerCase()}`, Icon: IconTableFilled}))
+
 const {slug} = Astro.params
 
 const space = spaces?.data?.find((space: any) => space.title.replace(' ', '-').toLowerCase() === slug)
@@ -16,13 +19,6 @@ const {title, id} = space
 ---
 
 <Layout title={space?.title || ''}>
-  <!-- <div class="flex w-full flex-col justify-center">
-    <h2
-      class="mb-8 bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% bg-clip-text text-center text-5xl font-bold text-transparent"
-      transition:persist
-    >
-      Control de Inversiones
-    </h2> -->
+  <Header menu={menu}/>
   <SpaceTable space={title || ''} spaceId={id} client:load />
-  <!-- </div> -->
 </Layout>
