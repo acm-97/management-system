@@ -38,7 +38,6 @@ export default function useSpacesSWR() {
     {
       onSuccess: async () => {
         await refreshSpaces()
-        window.location.href = '/'
       },
       onError: error => toast.error(error, errorProps),
     },

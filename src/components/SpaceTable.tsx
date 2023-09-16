@@ -20,7 +20,7 @@ import useSpacesSWR from '@/hooks/useSpaceSWR'
 function SpaceTable({space, spaceId}: {space: string; spaceId: number}) {
   const {rows, updateRow, createRow, deleteRow, refreshRows, isFetchingRows} = useRowsSWR(space)
   const {control, handleSubmit, ...form} = useRowForm(rows?.data)
-  const {columns, isFetchingColumns} = useColumnsSWR(space)
+  const {columns, isFetchingColumns, deleteColumn} = useColumnsSWR(space)
   const {deleteSpace} = useSpacesSWR()
   const openDialog = useColumnsStore(state => state.openDialog)
   const selectedRows = useRowsStore(state => state.selectedRows)
@@ -38,6 +38,18 @@ function SpaceTable({space, spaceId}: {space: string; spaceId: number}) {
 
   const onDeleteSpace = () => {
     deleteSpace({id: spaceId})
+    rows?.data?.forEach(async (row: any) => {
+      if (row.space === space) {
+        await deleteRow({id: row?.id})
+      }
+    })
+    columns?.data?.forEach(async (col: any) => {
+      if (col.space === space) {
+        await deleteColumn({id: col?.id})
+      }
+    })
+
+    window.location.href = '/'
   }
 
   const {fields} = useFieldArray({
