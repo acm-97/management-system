@@ -1,3 +1,4 @@
+import type {RowData} from '@/types'
 import {zodResolver} from '@hookform/resolvers/zod'
 import {useEffect} from 'react'
 import {useForm} from 'react-hook-form'
@@ -7,11 +8,12 @@ export const RowSchema = z.object({
   rows: z.array(
     z.object({
       info: z.array(z.any()),
+      rowId: z.number(),
     }),
   ),
 })
 
-export default function useSalesForm(rows: any) {
+export default function useSalesForm(rows: RowData[]) {
   const {handleSubmit, reset, ...rest} = useForm<z.infer<typeof RowSchema>>({
     mode: 'onSubmit',
     reValidateMode: 'onSubmit',
@@ -20,7 +22,7 @@ export default function useSalesForm(rows: any) {
 
   useEffect(() => {
     reset({
-      rows: rows?.map((row: any) => ({...row, rowId: row.id, info: row?.info ?? []})),
+      rows: rows?.map(row => ({rowId: row.id, info: row?.info ?? []})),
     })
   }, [rows])
 

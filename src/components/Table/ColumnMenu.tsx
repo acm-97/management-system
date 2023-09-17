@@ -9,8 +9,9 @@ import {
 } from '@/components'
 import {useColumnsStore, useColumnsSWR, useRowsSWR} from '@/hooks'
 import {IconDotsVertical, IconPencil, IconTrashXFilled} from '@tabler/icons-react'
+import type {ColumnData} from '@/types'
 
-type DropdownProps = {column: any; space: string}
+type DropdownProps = {column: ColumnData; space: string}
 
 function ColumnMenu({column, space}: DropdownProps) {
   const {deleteColumn} = useColumnsSWR(space)
@@ -24,13 +25,13 @@ function ColumnMenu({column, space}: DropdownProps) {
   }
   const onDelete = () => {
     let info: any[] | null = null
-    rows?.data?.forEach((row: any) => {
+    rows?.data?.forEach(row => {
       if (column?.subHeaders?.length > 0) {
         info = row?.info?.filter(
-          (item: any) => !column?.subHeaders?.some((subCol: any) => !!item[subCol?.fieldId]),
+          item => !column?.subHeaders?.some(subCol => !!item[subCol?.fieldId]),
         )
       } else {
-        info = row?.info?.filter((item: any) => !item[column?.fieldId])
+        info = row?.info?.filter(item => !item[column?.fieldId])
       }
 
       if (info && info.length !== row?.info?.length) {

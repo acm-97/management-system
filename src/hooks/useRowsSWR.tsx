@@ -1,4 +1,5 @@
 import {swrConfig} from '@/constants'
+import type {Rows} from '@/types'
 import {client, errorProps} from '@/utils'
 import {toast} from 'react-toastify'
 import useSWR from 'swr'
@@ -21,7 +22,7 @@ export default function useRowsSWR(space: string) {
     data: rows,
     isLoading: isFetchingRows,
     mutate: refreshRows,
-  } = useSWR(`/rows?filters[space][$eq]=${space}${query}`, client.get, swrConfig)
+  } = useSWR<Rows>(`/rows?filters[space][$eq]=${space}${query}`, client.get, swrConfig)
 
   const {trigger: createRow, isMutating: isCreatingRow} = useSWRMutation('/rows', client.post, {
     onSuccess: async () => await refreshRows(),

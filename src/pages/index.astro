@@ -5,7 +5,6 @@ import Layout from '@/layouts/Layout.astro'
 import {client, cn} from '@/utils'
 import {
   IconChartInfographic,
-  IconTableOptions,
   IconUserShield,
   IconTableFilled,
   IconHierarchy,
@@ -17,10 +16,12 @@ const spaces = await client.get('spaces')
 ---
 
 <Layout title="Home">
-  <section class="mx-auto flex w-full flex-col justify-center items-center gap-8 text-center md:w-3/4 lg:w-2/4">
+  <section
+    class="mx-auto flex w-full flex-col items-center justify-center gap-8 text-center md:w-3/4 lg:w-2/4"
+  >
     <Image src="/sys-manage.svg" alt="A bird." width="500" height="500" />
     <h1
-      class="text-2xl bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% bg-clip-text py-2 text-center font-bold text-transparent sm:text-4xl sm:font-normal"
+      class="bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% bg-clip-text py-2 text-center text-2xl font-bold text-transparent sm:text-4xl sm:font-normal"
     >
       Simple Sistema de Gestión para Pequeños Negocios
     </h1>

@@ -1,16 +1,23 @@
-import React, {memo, useMemo, useState} from 'react'
+import React, {memo, useMemo} from 'react'
 import ColumnMenu from './ColumnMenu'
 import RowField from './RowField'
 import {Checkbox} from '../Form'
 import type {CheckedState} from '@radix-ui/react-checkbox'
 import {cn} from '@/utils'
-import {useColumnsSWR, useRowsStore} from '@/hooks'
+import {useRowsStore} from '@/hooks'
+import type {ColumnData} from '@/types'
 import Skeleton from './Skeleton'
 import {IconTableOff} from '@tabler/icons-react'
 
+export type TableRows = {
+  id: string
+  rowId: number
+  info: any[]
+}
+
 type TableProps = {
-  columns: Array<Record<string, any>>
-  rows: Array<Record<string, any>>
+  columns: ColumnData[]
+  rows: TableRows[]
   rowsProps: Record<string, any>
   isLoading: boolean
   space: string
@@ -29,7 +36,7 @@ function Table({rows, columns, rowsProps, isLoading, space}: TableProps) {
     [rows, selectedRows],
   )
 
-  const onCheckedChange = (checked: CheckedState, id: string) => {
+  const onCheckedChange = (checked: CheckedState, id: number) => {
     if (checked) {
       addSelectedRows(id)
       return
@@ -73,7 +80,7 @@ function Table({rows, columns, rowsProps, isLoading, space}: TableProps) {
                   />
                 </th>
               )}
-              {columns?.map((col: any) => (
+              {columns?.map(col => (
                 <th
                   className="border border-solid border-slate-800 p-3 text-lg font-semibold "
                   style={{backgroundColor: col?.color}}
@@ -92,14 +99,14 @@ function Table({rows, columns, rowsProps, isLoading, space}: TableProps) {
             <tbody>
               <tr className="bg-sky-950">
                 <th className="border border-solid border-slate-700"></th>
-                {columns?.map((col: any) =>
+                {columns?.map(col =>
                   col?.subHeaders?.length === 0 ? (
                     <th
                       key={crypto.randomUUID()}
                       className="border border-solid border-slate-800 p-2.5"
                     />
                   ) : (
-                    col?.subHeaders?.map((subCol: any) => (
+                    col?.subHeaders?.map(subCol => (
                       <th
                         key={subCol?.fieldId}
                         className="border border-solid border-slate-800 p-2.5"
@@ -127,9 +134,9 @@ function Table({rows, columns, rowsProps, isLoading, space}: TableProps) {
                     }
                   />
                 </td>
-                {columns?.map((col: any, colIdx: number) => {
+                {columns?.map((col, colIdx: number) => {
                   if (col?.subHeaders?.length > 0) {
-                    return col?.subHeaders?.map((subCol: any, subColIdx: number) => {
+                    return col?.subHeaders?.map((subCol, subColIdx: number) => {
                       const name = `rows.${rowIdx}.info.${colIdx}.${subCol?.fieldId}`
                       const value = rowsProps.form.getValues(name)
                       if (!value) {

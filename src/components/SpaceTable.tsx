@@ -2,7 +2,6 @@ import React, {memo, useEffect, useCallback} from 'react'
 import {useColumnsStore, useColumnsSWR, useRowForm, useRowsStore, useRowsSWR} from '@/hooks'
 import {
   AddColumnDialog,
-  Button,
   Table,
   DropdownMenu,
   DropdownMenuContent,
@@ -12,14 +11,14 @@ import {
   Pagination,
 } from '@/components'
 import {useFieldArray} from 'react-hook-form'
-import {IconColumns, IconMenu2, IconTableOptions, IconTrashXFilled} from '@tabler/icons-react'
+import {IconTableOptions} from '@tabler/icons-react'
 import {buttonVariants} from '@/components/Button'
 import {cn} from '@/utils'
 import useSpacesSWR from '@/hooks/useSpaceSWR'
 
 function SpaceTable({space, spaceId}: {space: string; spaceId: number}) {
   const {rows, updateRow, createRow, deleteRow, refreshRows, isFetchingRows} = useRowsSWR(space)
-  const {control, handleSubmit, ...form} = useRowForm(rows?.data)
+  const {control, handleSubmit, ...form} = useRowForm(rows?.data ?? [])
   const {columns, isFetchingColumns, deleteColumn} = useColumnsSWR(space)
   const {deleteSpace} = useSpacesSWR()
   const openDialog = useColumnsStore(state => state.openDialog)
@@ -43,7 +42,7 @@ function SpaceTable({space, spaceId}: {space: string; spaceId: number}) {
         await deleteRow({id: row?.id})
       }
     })
-    columns?.data?.forEach(async (col: any) => {
+    columns?.data?.forEach(async col => {
       if (col.space === space) {
         await deleteColumn({id: col?.id})
       }
@@ -121,7 +120,7 @@ function SpaceTable({space, spaceId}: {space: string; spaceId: number}) {
         isLoading={isFetchingRows || isFetchingColumns}
         space={space}
         rows={fields}
-        columns={columns?.data}
+        columns={columns?.data ?? []}
         rowsProps={{control, handleSubmit, updateRow, form}}
       />
       <Pagination

@@ -5,6 +5,7 @@ import useSWR from 'swr'
 import {toast} from 'react-toastify'
 import useSWRMutation from 'swr/mutation'
 import useRowsSWR from './useRowsSWR'
+import type {ColumnSubHeaders, Columns} from '@/types'
 
 export default function useColumnsSWR(space: string) {
   const {refreshRows} = useRowsSWR(space)
@@ -13,14 +14,14 @@ export default function useColumnsSWR(space: string) {
     data: subHeaders,
     isLoading: isFetchingSubHeaders,
     error: subHeadersError,
-  } = useSWR('/product-sub-headers', client.get, swrConfig)
+  } = useSWR<ColumnSubHeaders>('/product-sub-headers', client.get, swrConfig)
 
   const {
     data: columns,
     isLoading: isFetchingColumns,
     error,
     mutate: refreshColumns,
-  } = useSWR(
+  } = useSWR<Columns>(
     space ? `/products?filters[space][$eq]=${space}&populate[subHeaders][populate]=*` : null,
     client.get,
     swrConfig,

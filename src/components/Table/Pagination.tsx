@@ -1,9 +1,9 @@
 import {useQueryParamsStore} from '@/hooks/useRowsSWR'
-import React, {memo, useState} from 'react'
+import React, {memo} from 'react'
 
-type PaginationProps = {page: number; pageSize: number; pageCount: number; total: number}
+type PaginationProps = {page?: number; pageSize?: number; pageCount?: number; total?: number}
 
-function Pagination({page, pageSize, pageCount, total}: PaginationProps) {
+function Pagination({page = 0, pageSize = 0, pageCount = 0, total = 0}: PaginationProps) {
   const updateQuery = useQueryParamsStore(state => state.updateQuery)
 
   const onNext = () => {
